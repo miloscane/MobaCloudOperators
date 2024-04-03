@@ -196,6 +196,11 @@ iframe{
     top: 0;
     left: 0;
     transform-origin: top left;
+    -webkit-transition:all ease 0.05s;
+    -moz-transition:all ease 0.05s;
+    -ms-transition:all ease 0.05s;
+    -o-transition:all ease 0.05s;
+    transition:all ease 0.05s;
 }
 
 
