@@ -41,7 +41,7 @@ http.listen(process.env.PORT, function(){
 	})
 });
 
-server.get('/modeller/:url1/url2',async (req,res)=>{
+server.get('/modeller/:url1/:url2',async (req,res)=>{
 	res.render("home",{
 		url1:decodeURIComponent(req.params.url1),
 		url2:decodeURIComponent(req.params.url2),
