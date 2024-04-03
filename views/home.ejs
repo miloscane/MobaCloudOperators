@@ -46,7 +46,6 @@
 
 			if(heightFits && widthFits){
 				if(iframeBox.width<siteFrame.width-0.1*siteFrame.width && iframeBox.height<siteFrame.height-0.1*siteFrame.height){
-					console.log("Special case")
 					scaleFactor = scaleFactor + 0.05*scaleFactor;
 					iframe.setAttribute("data-scale",scaleFactor);
 					iframe.setAttribute("style","transform:scale("+scaleFactor+")");
