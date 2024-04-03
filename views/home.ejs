@@ -17,36 +17,36 @@
 			console.log("-----------------------------------")*/
 			var heightFits = false;
 			var widthFits = false;
-			if(iframeBox.width<siteFrame.width || iframeBox.width<siteFrame.width-siteFrame.width*0.05){
+			if(iframeBox.width<siteFrame.width || iframeBox.width<siteFrame.width-siteFrame.width*0.01){
 				//width fits
 				//console.log("width fits")
 				widthFits = true;
 			}else if(iframeBox.width>siteFrame.width){
-				scaleFactor = scaleFactor - 0.05*scaleFactor;
+				scaleFactor = scaleFactor - 0.02*scaleFactor;
 				iframe.setAttribute("data-scale",scaleFactor);
 				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
 			}else if(iframeBox.width<siteFrame.width){
-				scaleFactor = scaleFactor + 0.05*scaleFactor;
+				scaleFactor = scaleFactor + 0.02*scaleFactor;
 				iframe.setAttribute("data-scale",scaleFactor);
 				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
 			}
 
-			if(iframeBox.height<siteFrame.height || iframeBox.height<siteFrame.height-siteFrame.height*0.05){
+			if(iframeBox.height<siteFrame.height || iframeBox.height<siteFrame.height-siteFrame.height*0.01){
 				//height fits
 				heightFits = true;
 			}else if(iframeBox.height>siteFrame.height){
-				scaleFactor = scaleFactor - 0.05*scaleFactor;
+				scaleFactor = scaleFactor - 0.02*scaleFactor;
 				iframe.setAttribute("data-scale",scaleFactor);
 				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
 			}else if(iframeBox.height<siteFrame.height){
-				scaleFactor = scaleFactor + 0.05*scaleFactor;
+				scaleFactor = scaleFactor + 0.02*scaleFactor;
 				iframe.setAttribute("data-scale",scaleFactor);
 				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
 			}
 
 			if(heightFits && widthFits){
-				if(iframeBox.width<siteFrame.width-0.1*siteFrame.width && iframeBox.height<siteFrame.height-0.1*siteFrame.height){
-					scaleFactor = scaleFactor + 0.05*scaleFactor;
+				if(iframeBox.width<siteFrame.width-0.03*siteFrame.width && iframeBox.height<siteFrame.height-0.03*siteFrame.height){
+					scaleFactor = scaleFactor + 0.02*scaleFactor;
 					iframe.setAttribute("data-scale",scaleFactor);
 					iframe.setAttribute("style","transform:scale("+scaleFactor+")");
 				}
