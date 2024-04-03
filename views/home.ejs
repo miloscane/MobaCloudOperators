@@ -15,14 +15,13 @@
 			console.log("Simulator: "+iframeBox.width);
 			console.log("Scale factor: "+scaleFactor);
 			console.log("-----------------------------------")*/
-			if(iframeBox.width>siteFrame.width-siteFrame.width*0.02 && iframeBox.width<siteFrame.width+siteFrame.width*0.02){
+			if(iframeBox.width<siteFrame.width){
 				//width fits
 				//console.log("width fits")
-				/*if(iframeBox.height<siteFrame.height+siteFrame.height*0.05){
+				if(iframeBox.height<siteFrame.height+siteFrame.height*0.05){
 					//height fits
 					console.log("height fits")
 					console.log(iframBox.height)
-					console.log()
 				}else if(iframeBox.height>siteFrame.height){
 					scaleFactor = scaleFactor - 0.05*scaleFactor;
 					iframe.setAttribute("data-scale",scaleFactor);
@@ -31,7 +30,7 @@
 					scaleFactor = scaleFactor + 0.05*scaleFactor;
 					iframe.setAttribute("data-scale",scaleFactor);
 					iframe.setAttribute("style","transform:scale("+scaleFactor+")");
-				}*/
+				}
 			}else if(iframeBox.width>siteFrame.width){
 				scaleFactor = scaleFactor - 0.05*scaleFactor;
 				iframe.setAttribute("data-scale",scaleFactor);
