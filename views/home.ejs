@@ -1,0 +1,46 @@
+<%- include ("partials/header") -%>
+	<div style="position:relative;overflow:hidden;width:100vw;height:100vh;" id="site-frame">
+		<iframe id="iframe" src=""></iframe>	
+	</div>
+	
+	<script>
+		var url = document.getElementById("iframe").src="<%=url%>"
+		var scaleFactor = 1;
+		setInterval(function(){
+			var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+			var iframe = document.getElementById("iframe");
+			var iframeBox = iframe.getBoundingClientRect();
+			var siteFrame = document.getElementById("site-frame").getBoundingClientRect();
+			/*console.log("Site frame: "+siteFrame.width)
+			console.log("Simulator: "+iframeBox.width);
+			console.log("Scale factor: "+scaleFactor);
+			console.log("-----------------------------------")*/
+			if(iframeBox.width>siteFrame.width-siteFrame.width*0.02 && iframeBox.width<siteFrame.width+siteFrame.width*0.02){
+				//width fits
+				//console.log("width fits")
+				/*if(iframeBox.height<siteFrame.height+siteFrame.height*0.05){
+					//height fits
+					console.log("height fits")
+					console.log(iframBox.height)
+					console.log()
+				}else if(iframeBox.height>siteFrame.height){
+					scaleFactor = scaleFactor - 0.05*scaleFactor;
+					iframe.setAttribute("data-scale",scaleFactor);
+					iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+				}else if(iframeBox.height<siteFrame.height){
+					scaleFactor = scaleFactor + 0.05*scaleFactor;
+					iframe.setAttribute("data-scale",scaleFactor);
+					iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+				}*/
+			}else if(iframeBox.width>siteFrame.width){
+				scaleFactor = scaleFactor - 0.05*scaleFactor;
+				iframe.setAttribute("data-scale",scaleFactor);
+				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+			}else if(iframeBox.width<siteFrame.width){
+				scaleFactor = scaleFactor + 0.05*scaleFactor;
+				iframe.setAttribute("data-scale",scaleFactor);
+				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+			}
+		},100)
+	</script>
+<%- include ("partials/footer") -%>

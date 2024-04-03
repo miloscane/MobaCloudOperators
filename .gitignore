@@ -1,0 +1,6 @@
+/public/images
+/public/videos
+**/.DS_Store
+.env
+/node_modules
+favicon.png
