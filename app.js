@@ -7,6 +7,9 @@ const bodyParser		=	require('body-parser');
 const dotenv 			=	require('dotenv');
 const crypto			=	require('node:crypto');
 const {MongoClient}		=	require('mongodb');
+const session			=	require('express-session');
+const cookieParser		=	require('cookie-parser');
+
 dotenv.config();
 
 server.set('view engine','ejs');
@@ -21,6 +24,11 @@ server.set('views', viewArray);
 server.use(express.static(__dirname + '/public'));
 server.use(bodyParser.json({limit:'50mb'}));  
 server.use(bodyParser.urlencoded({ limit:'50mb' , extended: true }));
+server.use(session({
+	secret: process.env.sessionsecret,
+    resave: true,
+    saveUninitialized: true
+}));
 
 var bucket = process.env.bucket ? process.env.bucket : "";
 
@@ -34,18 +42,78 @@ http.listen(process.env.PORT, function(){
 	client.connect()
 	.then(() => {
 		console.log("Connected to database in " + eval(new Date().getTime()/1000-dbConnectionStart/1000).toFixed(2)+"s")
-		usersDB		=	client.db("Mobahub").collection('Modeller Cloud');
+		usersDB		=	client.db("MobaHub").collection('Modeller Cloud');
 	})
 	.catch((error)=>{
 		console.log(error);
 	})
 });
 
+server.get('/login',async (req,res)=>{
+	if(req.session.user){
+		res.redirect("/")
+	}else{
+		if(req.query.url){
+			res.render("login",{
+				url: decodeURIComponent(req.query.url),
+				bucket: bucket
+			});
+		}else{
+			res.render("login",{});
+		}
+	}
+});
+
+server.post('/login',async (req,res)=>{
+	if(req.session.user){
+		res.redirect("/")
+	}else{
+		const username = req.body.username;
+		const password = hashString(req.body.password);
+		usersDB.find({username:username}).toArray()
+		.then((users) => {
+			if(users.length>0){
+				if(users[0].password==password){
+					var sessionObject	=	JSON.parse(JSON.stringify(users[0]));
+					delete sessionObject.password;
+					req.session.user	=	sessionObject;
+					res.redirect(users[0].url);
+					
+				}else{
+					res.send("Wrong password");
+				}
+			}else{
+				res.send("No such user");
+			}
+		})
+		.catch(error => {
+			console.log(error)
+			res.send("login error");
+		})
+	}
+});
+
+
 server.get('/modeller/:url',async (req,res)=>{
 	res.render("home",{
 		url:decodeURIComponent(req.params.url),
 		bucket: bucket
 	});
+});
+
+
+
+
+server.get('/tata1',async (req,res)=>{
+	if(req.session.user){
+		res.render("tata1",{
+			bucket: bucket
+		});
+	}else{
+		res.redirect("/login?url="+encodeURIComponent(req.url));
+	}
+
+	
 });
 
 function hashString(string){

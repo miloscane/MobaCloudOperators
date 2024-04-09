@@ -1,0 +1,58 @@
+<%- include ("partials/header") -%>
+	<div style="position:relative;overflow:hidden;width:100vw;height:100vh;background-color:rgb(37,78,118);background-image:url('<%=bucket%>/images/Mobatec-Home-Banner-Background.jpeg');background-size:cover;background-position:right center;" id="site-frame">
+		<iframe id="iframe" class="tataFrame" src=""></iframe>
+	</div>
+	
+	<script>
+		var url = document.getElementById("iframe").src="https://tatasteel1.modeller.cloud:3000/vnc.html?password=7b0ce21a0d8d3c7adec51d48abe2a3e9"
+		var scaleFactor = 1;
+		setInterval(function(){
+			var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+			var iframe = document.getElementById("iframe");
+			var iframeWrap = document.getElementById("iframeWrap")
+			var iframeBox = iframe.getBoundingClientRect();
+			var siteFrame = document.getElementById("site-frame").getBoundingClientRect();
+			/*console.log("Site frame: "+siteFrame.width)
+			console.log("Simulator: "+iframeBox.width);
+			console.log("Scale factor: "+scaleFactor);
+			console.log("-----------------------------------")*/
+			var heightFits = false;
+			var widthFits = false;
+			if(iframeBox.width<siteFrame.width || iframeBox.width<siteFrame.width-siteFrame.width*0.01){
+				//width fits
+				//console.log("width fits")
+				widthFits = true;
+			}else if(iframeBox.width>siteFrame.width){
+				scaleFactor = scaleFactor - 0.02*scaleFactor;
+				iframe.setAttribute("data-scale",scaleFactor);
+				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+			}else if(iframeBox.width<siteFrame.width){
+				scaleFactor = scaleFactor + 0.02*scaleFactor;
+				iframe.setAttribute("data-scale",scaleFactor);
+				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+			}
+
+			if(iframeBox.height<siteFrame.height || iframeBox.height<siteFrame.height+siteFrame.height*0.01){
+				//height fits
+				heightFits = true;
+			}else if(iframeBox.height>siteFrame.height){
+				scaleFactor = scaleFactor - 0.02*scaleFactor;
+				iframe.setAttribute("data-scale",scaleFactor);
+				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+			}else if(iframeBox.height<siteFrame.height){
+				scaleFactor = scaleFactor + 0.02*scaleFactor;
+				iframe.setAttribute("data-scale",scaleFactor);
+				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+			}
+
+			if(heightFits && widthFits){
+				if(iframeBox.width<siteFrame.width-0.03*siteFrame.width && iframeBox.height<siteFrame.height-0.03*siteFrame.height){
+					scaleFactor = scaleFactor + 0.02*scaleFactor;
+					iframe.setAttribute("data-scale",scaleFactor);
+					iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+				}
+			}
+
+		},20)
+	</script>
+<%- include ("partials/footer") -%>
