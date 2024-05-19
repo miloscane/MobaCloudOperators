@@ -9,7 +9,8 @@ const crypto			=	require('node:crypto');
 const {MongoClient}		=	require('mongodb');
 const session			=	require('express-session');
 const cookieParser		=	require('cookie-parser');
-
+const io				=	require('socket.io')(http);
+const nodemailer		=	require('nodemailer');
 dotenv.config();
 
 server.set('view engine','ejs');
@@ -34,6 +35,16 @@ var bucket = process.env.bucket ? process.env.bucket : "";
 
 const mongourl	=	process.env.mongourl;
 const client 	= 	new MongoClient(mongourl,{});
+
+var transporter = nodemailer.createTransport({
+	host: process.env.transporterhost,
+	port: 465,
+	secure: true,
+	auth: {
+		user: process.env.transporteruser,
+		pass: process.env.transporterpass
+	}
+});
 
 http.listen(process.env.PORT, function(){
 	console.log("MobaCloud Operators");
@@ -102,18 +113,15 @@ server.get('/modeller/:url',async (req,res)=>{
 });
 
 
-
-
 server.get('/tata1',async (req,res)=>{
 	if(req.session.user){
 		res.render("tata1",{
-			bucket: bucket
+			bucket: bucket,
+			user: req.session.user.username
 		});
 	}else{
 		res.redirect("/login?url="+encodeURIComponent(req.url));
 	}
-
-	
 });
 
 function hashString(string){
@@ -125,3 +133,82 @@ function hashString(string){
 	
 	return hash
 }
+
+var scenarios = [
+		{
+			"number":1,
+			"string":"Scenario 1 - naar Velsen"
+		},
+		{
+			"number":2,
+			"string":"Scenario 1 - naar Velsen fake"
+		},
+		{
+			"number":3,
+			"string":"Scenario 2 - THV ketel 41"
+		},
+		{
+			"number":4,
+			"string":"Scenario 2 - THV ketel 41 fake"
+		},
+		{
+			"number":5,
+			"string":"Scenario 3 - IJmond"
+		},
+		{
+			"number":6,
+			"string":"Scenario 3 - IJmond fake"
+		},
+		{
+			"number":7,
+			"string":"Scenario 4 - KF1"
+		},
+		{
+			"number":8,
+			"string":"Scenario 4 - KF1 fake"
+		},
+		{
+			"number":9,
+			"string":"Scenario 5 - Velsen 25"
+		},
+		{
+			"number":10,
+			"string":"Scenario 5 - Velsen 25 fake"
+		},
+		{
+			"number":11,
+			"string":"Scenario 6 - CN2 -> fakkels"
+		},
+		{
+			"number":12,
+			"string":"Scenario 6 - CN2 -> fakkels fake"
+		},
+	]
+
+
+io.on('connection', function(socket){
+	socket.on('grade', function(user,scenario,grade,sentString){
+		var success = Number(grade)==1 ? "successfully" : "unsuccessfully";
+		var scenarioString = "Undefined";
+		for(var i=0;i<scenarios.length;i++){
+			if(Number(scenario)==scenarios[i].number){
+				scenarioString = scenarios[i].string;
+			}
+		}
+		var mailOptions = {
+			from: '"MobaCloud" <admin@mobatec.cloud>',
+			to: 'miloscane@gmail.com',
+			subject: 'Operator Training Result',
+			html: 'Hello<br>The operator '+user+' '+success+' finished the scenario ' + scenarioString
+		};
+			
+		transporter.sendMail(mailOptions, (error, info) => {
+			if (error) {
+				console.log(error)
+			}
+			socket.emit("gradeReceived",user,sentString);
+		});
+		
+		
+	})
+})
