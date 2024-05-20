@@ -188,9 +188,11 @@ var scenarios = [
 
 io.on('connection', function(socket){
 	socket.on('grade', function(user,scenario,grade,sentString){
+		//console.log("Received a grade")
 		var success = Number(grade)==1 ? "successfully" : "unsuccessfully";
 		var scenarioString = "Undefined";
 		for(var i=0;i<scenarios.length;i++){
+			//console.log(Number(scenario) + " vs "+ scenarios[i].number);
 			if(Number(scenario)==scenarios[i].number){
 				scenarioString = scenarios[i].string;
 			}
@@ -199,7 +201,7 @@ io.on('connection', function(socket){
 			from: '"MobaCloud" <admin@mobatec.cloud>',
 			to: 'miloscane@gmail.com',
 			subject: 'Operator Training Result',
-			html: 'Hello<br>The operator '+user+' '+success+' finished the scenario ' + scenarioString
+			html: 'Hello<br>The operator '+user+' '+success+' finished the scenario ' + scenarioString+".<br>Kind regards,<br>MobaCloud<br><img src=\"https://www.mobatec.nl/web/wp-content/uploads/2017/10/Logo.jpg\">"
 		};
 			
 		transporter.sendMail(mailOptions, (error, info) => {
