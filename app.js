@@ -201,7 +201,7 @@ io.on('connection', function(socket){
 			from: '"MobaCloud" <admin@mobatec.cloud>',
 			to: 'miloscane@gmail.com',
 			subject: 'Operator Training Result',
-			html: 'Hello<br>The operator '+user+' '+success+' finished the scenario ' + scenarioString+".<br>Kind regards,<br>MobaCloud<br><img src=\"https://www.mobatec.nl/web/wp-content/uploads/2017/10/Logo.jpg\">"
+			html: 'Hello,<br>The operator '+user+' '+success+' finished the scenario ' + scenarioString+".<br>&nbsp;<br>Kind regards,<br>MobaCloud<br><img src=\"https://www.mobatec.nl/web/wp-content/uploads/2017/10/Logo.jpg\">"
 		};
 			
 		transporter.sendMail(mailOptions, (error, info) => {
