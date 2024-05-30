@@ -1,6 +1,6 @@
 <%- include ("partials/header") -%>
 	<script src="/js/socket.js"></script>
-	<script>var socket  = io({});</script>
+	<script>var socket  = io({reconnection:false});</script>
 	<script>
 		var user = "<%=user%>";
 	</script>
