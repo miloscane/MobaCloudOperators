@@ -199,7 +199,7 @@ io.on('connection', function(socket){
 		}
 		var mailOptions = {
 			from: '"MobaCloud" <admin@mobatec.cloud>',
-			to: 'milos.ivankovic@mobatec.nl',
+			to: 'ron.vanderaar@tatasteeleurope.com,frank.fe.berkholst@tatasteeleurope.com,milos@mobatec.nl',
 			subject: 'Operator Training Result',
 			html: 'Hello,<br>The operator '+user+' '+success+' finished the scenario ' + scenarioString+".<br>Timestamp: "+new Date()+"<br>&nbsp;<br>Kind regards,<br>MobaCloud<br><img src=\"https://www.mobatec.nl/web/wp-content/uploads/2017/10/Logo.jpg\">"
 		};
