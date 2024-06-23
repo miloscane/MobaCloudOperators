@@ -70,7 +70,10 @@ server.get('/login',async (req,res)=>{
 				bucket: bucket
 			});
 		}else{
-			res.render("login",{});
+			res.render("login",{
+				url: "",
+				bucket: bucket
+			});
 		}
 	}
 });
