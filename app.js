@@ -62,7 +62,8 @@ http.listen(process.env.PORT, function(){
 
 server.get('/login',async (req,res)=>{
 	if(req.session.user){
-		res.redirect("/")
+		req.session.destroy(function(){});
+		res.redirect("/login");
 	}else{
 		if(req.query.url){
 			res.render("login",{
