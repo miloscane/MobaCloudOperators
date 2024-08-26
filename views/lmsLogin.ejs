@@ -1,0 +1,51 @@
+<%- include ("partials/header") -%>
+	<div class="lmsLogin">
+		<div class="lmsLoginWrap">
+			<div class="codes" id="codes"></div>
+			<script>
+				for(var i=0;i<4;i++){
+					var code = document.createElement("DIV");
+					code.setAttribute("class","code");
+					for(var j=0;j<4;j++){
+						var cifer = document.createElement("DIV");
+						cifer.setAttribute("class","cifer");
+						cifer.innerHTML = "<input type=\"text\" class=\"cipher\" oninput=\"ciferInput(this)\">";
+						code.appendChild(cifer);
+					}
+					document.getElementById("codes").appendChild(code);
+				}
+
+				function ciferInput(elem){
+					var ciphers = document.getElementsByClassName("cipher");
+					elem.value = elem.value.toUpperCase();
+					var lastElem = false;
+					for(var i=0;i<ciphers.length;i++){
+						if(ciphers[i]==elem){
+							if(ciphers[i+1]){
+								ciphers[i+1].focus();
+							}else{
+								lastElem = true;
+							}
+						}
+					}
+					if(lastElem){
+						var code = "";
+						for(var i=0;i<ciphers.length;i++){
+							code += ciphers[i].value
+						}
+						document.getElementById("code").value = code;
+						document.getElementById("form").submit();
+					}
+				}
+			</script>
+			<form id="form" method="POST" action="/lmsLogin" style="display:none">
+				<input type="text" id="code" name="code">
+				<input type="text" name="hostname" value="<%=hostname%>">
+				<input type="text" name="lmsid" value="<%=lmsid%>">
+			</form>
+			<div class="lmsMessage">
+				<%-message%>
+			</div>
+		</div>
+	</div>
+<%- include ("partials/footer") -%>

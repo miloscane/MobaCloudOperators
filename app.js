@@ -46,6 +46,25 @@ var transporter = nodemailer.createTransport({
 	}
 });
 
+function generateId(length) {
+	var result           = [];
+	var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	var charactersLength = characters.length;
+	for ( var i = 0; i < length; i++ ) {
+		result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
+	}
+	return result.join('');
+}
+
+function getDateAsStringForInputObject(date){
+	var yearString	=	date.getFullYear();
+	var month		=	eval(date.getMonth()+1);
+	var monthString	=	(month<10) ? "0" + month : month;
+	var day			=	date.getDate();
+	var dayString	=	(day<10) ? "0" + day : day;
+	return	yearString+"-"+monthString+"-"+dayString;
+}
+
 http.listen(process.env.PORT, function(){
 	console.log("MobaCloud Operators");
 	console.log("Server Started");
@@ -54,6 +73,25 @@ http.listen(process.env.PORT, function(){
 	.then(() => {
 		console.log("Connected to database in " + eval(new Date().getTime()/1000-dbConnectionStart/1000).toFixed(2)+"s")
 		usersDB		=	client.db("MobaHub").collection('Modeller Cloud');
+		lmsActivationCodesDB		=	client.db("MobaCloud").collection('LMSActivationCodes');
+		lmsUsersDB				=	client.db("MobaCloud").collection('LMSUsers');
+
+		/*var codes = [];
+		for(var i=0;i<10;i++){
+			var json = {};
+			json.code = generateId(16);
+			json.type = 1;
+			json.date = getDateAsStringForInputObject(new Date());
+			codes.push(json)
+		}
+
+		lmsActivationCodesDB.insertMany(codes)
+		.then((dbR)=>{
+			console.log(dbR)
+		})
+		.catch((error)=>{
+			console.log(error)
+		})*/
 	})
 	.catch((error)=>{
 		console.log(error);
@@ -128,6 +166,85 @@ server.get('/tata1',async (req,res)=>{
 	}
 });
 
+server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
+	lmsUsersDB.find({hostname:decodeURIComponent(req.params.hostname),lmsid:decodeURIComponent(req.params.lmsid)}).toArray()
+	.then((users)=>{
+		if(users.length>0){
+			res.send("Ok i know you "+users[0].url +" / "+users[0].hostname + " / "+users[0].lmsid)
+		}else{
+			res.render("lmsLogin",{
+				message: "Input your activation code",
+				hostname: decodeURIComponent(req.params.hostname),
+				lmsid: decodeURIComponent(req.params.lmsid),
+				bucket: bucket
+			})
+		}
+	})
+	.catch((error)=>{
+		res.render("message",{
+			message: "There was a database error. Please try refrehing the page. If the problem persists e-mail us on <a href=\"mailto:info@mobatec.nl\">info@mobatec.nl</a>",
+			bucket: bucket
+		})
+	})
+});
+
+server.post('/lmsLogin',async (req,res)=>{
+	lmsActivationCodesDB.find({code:req.body.code}).toArray()
+	.then((codes)=>{
+		if(codes.length>0){
+			var json = {};
+			json.code = codes[0].code;
+			json.type = codes[0].type;
+			json.url = codes[0].url;
+			json.hostname = req.body.hostname;
+			json.lmsid = req.body.lmsid;
+			lmsActivationCodesDB.deleteOne({code:req.body.code})
+			.then((dbResponse)=>{
+				lmsUsersDB.insertOne(json)
+				.then((dbResponse2)=>{
+					res.redirect(json.url);
+				})
+				.catch((error)=>{
+					console.log(error)
+					res.render("message",{
+						message: "There was a database error. Please try refrehing the page. If the problem persists e-mail us on <a href=\"mailto:info@mobatec.nl\">info@mobatec.nl</a>",
+						bucket: bucket
+					})
+				})
+				
+			})
+			.catch((error)=>{
+				console.log(error)
+				res.render("message",{
+					message: "There was a database error. Please try refrehing the page. If the problem persists e-mail us on <a href=\"mailto:info@mobatec.nl\">info@mobatec.nl</a>",
+					bucket: bucket
+				})
+			})
+			
+		}else{
+			res.render("lmsLogin",{
+				message: "<span style=\"color:rgb(220,0,0)\">Activation code not recognized</span>",
+				hostname: req.body.hostname,
+				lmsid: req.body.lmsid,
+				bucket: bucket
+			})
+		}
+	})
+	.catch((error)=>{
+		console.log(error)
+		res.render("message",{
+			message: "There was a database error. Please try refrehing the page. If the problem persists e-mail us on <a href=\"mailto:info@mobatec.nl\">info@mobatec.nl</a>",
+			bucket: bucket
+		})
+	})
+});
+
+
+
+
+
+
+
 function hashString(string){
 	if (typeof string === 'string'){
 		var hash	=	crypto.createHash('md5').update(string).digest('hex')
@@ -187,7 +304,9 @@ var scenarios = [
 			"number":12,
 			"string":"Scenario 6 - CN2 -> fakkels fake"
 		},
-	]
+	];
+
+
 
 
 io.on('connection', function(socket){
