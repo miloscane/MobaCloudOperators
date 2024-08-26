@@ -76,12 +76,15 @@ http.listen(process.env.PORT, function(){
 		lmsActivationCodesDB		=	client.db("MobaCloud").collection('LMSActivationCodes');
 		lmsUsersDB				=	client.db("MobaCloud").collection('LMSUsers');
 
+		//SDRI-VAZV-OQBO-WRKC
+
 		/*var codes = [];
-		for(var i=0;i<10;i++){
+		for(var i=0;i<3;i++){
 			var json = {};
 			json.code = generateId(16);
 			json.type = 1;
 			json.date = getDateAsStringForInputObject(new Date());
+			json.url = "https://lms"+eval(i+1)+".modeller.cloud:3000/vnc.html?password=7b0ce21a0d8d3c7adec51d48abe2a3e9"
 			codes.push(json)
 		}
 
@@ -170,7 +173,7 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 	lmsUsersDB.find({hostname:decodeURIComponent(req.params.hostname),lmsid:decodeURIComponent(req.params.lmsid)}).toArray()
 	.then((users)=>{
 		if(users.length>0){
-			res.send("Ok i know you "+users[0].url +" / "+users[0].hostname + " / "+users[0].lmsid)
+			res.redirect(users[0].url)
 		}else{
 			res.render("lmsLogin",{
 				message: "Input your activation code",
