@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.15");
+console.log("Loaded scorm script v2.16");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
@@ -53,9 +53,9 @@ setInterval(function(){
 			elems[i].dataset.initizialized = 1;
 			var modelStringArray = elems[i].alt.split(":");
 			if(modelStringArray.length==3){
-				var modelString = "../"+modelStringArray[1]+"/"+modelStringArray[2];
+				var modelString = "../../"+modelStringArray[1]+"/"+modelStringArray[2];
 			}else if(modelStringArray.length==4){
-				var modelString = "../"+modelStringArray[1]+"/"+modelStringArray[2]+"_"+modelStringArray[3];
+				var modelString = "../../"+modelStringArray[1]+"/"+modelStringArray[2]+"_"+modelStringArray[3];
 
 			}
 			
