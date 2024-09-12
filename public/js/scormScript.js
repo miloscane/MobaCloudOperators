@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v1.9");
+console.log("Loaded scorm script v2.01");
 
 var lmsAPI = parent;
 var iFrameBuilt = false;
