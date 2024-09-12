@@ -176,7 +176,7 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 	lmsUsersDB.find({hostname:decodeURIComponent(req.params.hostname),lmsid:decodeURIComponent(req.params.lmsid)}).toArray()
 	.then((users)=>{
 		if(users.length>0){
-			res.redirect(users[0].url+"?modelpath="+req.query.modelpath)
+			res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
 		}else{
 			res.render("lmsLogin",{
 				message: "Input your activation code",
@@ -209,7 +209,7 @@ server.post('/lmsLogin',async (req,res)=>{
 			.then((dbResponse)=>{
 				lmsUsersDB.insertOne(json)
 				.then((dbResponse2)=>{
-					res.redirect(json.url+"?modelpath="+req.body.modelpath);
+					res.redirect(json.url+"&modelpath="+req.body.modelpath);
 				})
 				.catch((error)=>{
 					console.log(error)
