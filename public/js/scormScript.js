@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.06");
+console.log("Loaded scorm script v2.07");
 
 function loadMobaCloudModel(modelPath){
 	console.log("LOADING MODEL....")
