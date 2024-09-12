@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v1.2");
+console.log("Loaded scorm script v1.3");
 
 var allImages = document.getElementsByTagName("IMG");
 for(var i=0;i<allImages.length;i++){
