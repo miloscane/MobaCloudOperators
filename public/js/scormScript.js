@@ -1,6 +1,8 @@
 console.log("Loaded scorm script v1.5");
 
 var allImages = document.getElementsByTagName("IMG");
+console.log("All image");
+console.log(allImages)
 for(var i=0;i<allImages.length;i++){
 	console.log(allImages[i].alt)
 	if(allImages[i].alt.startsWith("MobaCloudOpC")){
