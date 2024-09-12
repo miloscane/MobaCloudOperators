@@ -35,7 +35,7 @@ setInterval(function(){
 		}
 		console.log("-----------------");
 	}
-},500)
+},1000)
 
 
 setInterval(function(){
@@ -58,21 +58,24 @@ setInterval(function(){
 },1000)
 
 function generateMobaCloudIframe(studentId,hostname){
-	var iFrameDiv	=	document.createElement("DIV")
-	iFrameDiv.setAttribute("id","mobacloud-wrap");
-	iFrameDiv.setAttribute("style","display:none;width:100%;max-width:1230px;margin:0 auto;")
-		var iframe = document.createElement("IFRAME");
-		//iframe.setAttribute("src","https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(location.hostname)+"/"+encodeURIComponent(id))
-		iframe.setAttribute("scrolling","no");
-		iframe.setAttribute("id","mobacloud");
-		iframe.setAttribute("data-id",studentId);
-		iframe.setAttribute("data-hostname",hostname);
-		iframe.setAttribute("style","width:100%;height:800px")
-		iFrameDiv.appendChild(iframe);
-	//document.getElementsByTagName("body")[0].appendChild(iFrameDiv)
-	document.getElementById("content").appendChild(iFrameDiv);
-	console.log("iFrame initialized");
-	console.log("---------------------------");
+	if(!document.getElementById("mobacloud-wrap")){
+		var iFrameDiv	=	document.createElement("DIV")
+		iFrameDiv.setAttribute("id","mobacloud-wrap");
+		iFrameDiv.setAttribute("style","display:none;width:100%;max-width:1230px;margin:0 auto;")
+			var iframe = document.createElement("IFRAME");
+			//iframe.setAttribute("src","https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(location.hostname)+"/"+encodeURIComponent(id))
+			iframe.setAttribute("scrolling","no");
+			iframe.setAttribute("id","mobacloud");
+			iframe.setAttribute("data-id",studentId);
+			iframe.setAttribute("data-hostname",hostname);
+			iframe.setAttribute("style","width:100%;height:800px")
+			iFrameDiv.appendChild(iframe);
+		//document.getElementsByTagName("body")[0].appendChild(iFrameDiv)
+		document.getElementById("content").appendChild(iFrameDiv);
+		console.log("iFrame initialized");
+		console.log("---------------------------");	
+	}
+	
 	
 }
 
