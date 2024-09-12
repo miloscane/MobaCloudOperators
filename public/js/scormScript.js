@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.11");
+console.log("Loaded scorm script v2.12");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
@@ -152,7 +152,7 @@ eventer(messageEvent,function(e) {
 			gradeSent = true;
 		}
 	//run function//
-	}else if(data.toString()startsWith("LaunchSimulation")){
+	}else if(data.toString().startsWith("LaunchSimulation")){
 		loadMobaCloudModel(data.toString().split("$")[1])
 	}
 },false);
