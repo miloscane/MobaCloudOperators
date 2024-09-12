@@ -1,4 +1,9 @@
-console.log("Loaded scorm script v2.01");
+console.log("Loaded scorm script v2.03");
+
+function loadMobaCloudModel(modelPath){
+	var mobacloudIframe = document.getElementById("mobacloud");
+	mobacloudIframe.setAttribute("src","https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(mobacloudIframe.dataset.hostname)+"/"+encodeURIComponent(mobacloudIframe.dataset.id)+"?modelpath="+encodeURIComponent(modelPath));
+}
 
 var lmsAPI = parent;
 var iFrameBuilt = false;
@@ -7,7 +12,7 @@ setInterval(function(){
 	if(!iFrameBuilt){
 		if(lmsAPI.hasOwnProperty("API")){
 			if(lmsAPI.API.hasOwnProperty("LMSGetValue")){
-				if(lmsAPI.API.LMSGetValue("cmi.core.student_id")!=""){
+				if(lmsAPI.API.LMSGetValue("cmi.core.student_name")!=""){
 					setTimeout(function(){
 						lmsAPI.API.LMSInitialize();
 						iFrameBuilt = true;
@@ -16,7 +21,9 @@ setInterval(function(){
 						//console.log(name);
 						//console.log("--------------");
 						//console.log("Student ID:");
+						console.log("Student ID:");
 						var studentId = lmsAPI.API.LMSGetValue("cmi.core.student_id");
+						console.log(studentId);
 						//console.log(studentId);
 						//console.log("--------------");
 						//console.log("Hostname:");
@@ -57,10 +64,7 @@ setInterval(function(){
 	}	
 },1000)
 
-function loadMobaCloudModel(modelPath){
-	var mobacloudIframe = document.getElementById("mobacloud");
-	mobacloudIframe.setAttribute("src","https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(mobacloudIframe.dataset.hostname)+"/"+encodeURIComponent(mobacloudIframe.dataset.id)+"?modelpath="+encodeURIComponent(modelPath));
-}
+
 
 function generateMobaCloudIframe(studentIdF,hostnameF){
 	if(!document.getElementById("mobacloud-wrap")){
