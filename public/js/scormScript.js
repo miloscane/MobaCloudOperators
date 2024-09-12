@@ -4,11 +4,10 @@ var lmsAPI = parent;
 var iFrameBuilt = false;
 
 setInterval(function(){
-	if(!initialized){
+	if(!iFrameBuilt){
 		if(lmsAPI.hasOwnProperty("API")){
 			if(lmsAPI.API.hasOwnProperty("LMSGetValue")){
 				if(lmsAPI.API.LMSGetValue("cmi.core.student_id")!=""){
-					initialized = true;
 					setTimeout(function(){
 						lmsAPI.API.LMSInitialize();
 						console.log("Student name:");
