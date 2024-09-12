@@ -76,9 +76,7 @@ http.listen(process.env.PORT, function(){
 		lmsActivationCodesDB		=	client.db("MobaCloud").collection('LMSActivationCodes');
 		lmsUsersDB				=	client.db("MobaCloud").collection('LMSUsers');
 
-		//SDRI-VAZV-OQBO-WRKC
-
-		var codes = [];
+		/*var codes = [];
 		for(var i=0;i<30;i++){
 			var json = {};
 			json.code = generateId(16);
@@ -99,7 +97,7 @@ http.listen(process.env.PORT, function(){
 		})
 		.catch((error)=>{
 			console.log(error)
-		})
+		})*/
 	})
 	.catch((error)=>{
 		console.log(error);
