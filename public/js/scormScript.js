@@ -1,9 +1,8 @@
-console.log("Loaded scorm script v2.09");
+console.log("Loaded scorm script v2.10");
 
-function loadMobaCloudModel(modelPath){
-	console.log("LOADING MODEL....")
+function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
-	
+	mobacloudIframe.src = model;
 }
 
 var lmsAPI = parent;
@@ -59,7 +58,7 @@ setInterval(function(){
 
 			}
 			
-			elems[i].setAttribute("onclick","console.log('Sent message to parent');parent.postMessage('https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(document.getElementById('mobacloud').dataset.hostname)+"/"+encodeURIComponent(document.getElementById('mobacloud').dataset.id)+"?modelpath="+encodeURIComponent(modelString)+"')");
+			elems[i].setAttribute("onclick","console.log('Sent message to parent');parent.postMessage('LaunchSimulation$https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(document.getElementById('mobacloud').dataset.hostname)+"/"+encodeURIComponent(document.getElementById('mobacloud').dataset.id)+"?modelpath="+encodeURIComponent(modelString)+"')");
 			//console.log("Initialized an image for a click")
 
 		}
@@ -152,9 +151,8 @@ eventer(messageEvent,function(e) {
 			gradeSent = true;
 		}
 	//run function//
-	}else{
-		console.log("Received a message")
-		console.log(data);
+	}else if(data.startsWith("LaunchSimulation")){
+		loadMobaCloudModel(data.split("$")[1])
 	}
 },false);
 
