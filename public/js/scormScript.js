@@ -1,9 +1,10 @@
-console.log("Loaded scorm script v2.12");
+console.log("Loaded scorm script v2.13");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
 	mobacloudIframe.src = model;
-	console.log("Loaded model "+model)
+	document.getElementById('content-frame').style.display = 'none';
+	document.getElementById('mobacloud-wrap').style.display = 'block';
 }
 
 var lmsAPI = parent;
@@ -25,7 +26,6 @@ setInterval(function(){
 						console.log("Student ID:");
 						var studentId = lmsAPI.API.LMSGetValue("cmi.core.student_id");
 						console.log(studentId);
-						//console.log(studentId);
 						//console.log("--------------");
 						//console.log("Hostname:");
 						//console.log(location.hostname);
@@ -99,7 +99,7 @@ var gradeSent	=	false;
 eventer(messageEvent,function(e) {
 	var key = e.message ? "message" : "data";
 	var data = e[key];
-	if(data.toString().includes("mobaGrade:") && !gradeSent){
+	if(data.toString().includes("mobaGradeFinal:") && !gradeSent){
 		grade = data.toString().split("Grade:")[1]
 		if(lmsAPI.hasOwnProperty("API")){
 			console.log("Found API")
@@ -125,33 +125,19 @@ eventer(messageEvent,function(e) {
 					lmsAPI.API.LMSSetValue("cmi.core.lesson_status","failed")
 				}
 				
-				console.log("Printing cmi.core Variables with LMSGetValue function:")
+				/*console.log("Printing cmi.core Variables with LMSGetValue function:")
 				console.log("Min:" + lmsAPI.API.LMSGetValue("cmi.core.score.min"))
 				console.log("Max:" + lmsAPI.API.LMSGetValue("cmi.core.score.max"))
 				console.log("Raw:" + lmsAPI.API.LMSGetValue("cmi.core.score.raw"))
-				console.log("Status:" + lmsAPI.API.LMSGetValue("cmi.core.lesson_status"))
+				console.log("Status:" + lmsAPI.API.LMSGetValue("cmi.core.lesson_status"))*/
 				alert("Grade received: "+grade+", you can now quit the exercise.")
 				lmsAPI.API.LMSCommit("");
 				lmsAPI.API.LMSFinish("");
 				gradeSent = true;
+				document.getElementById('content-frame').style.display = 'block';
+				document.getElementById('mobacloud-wrap').style.display = 'none';
 			}
-		}else if(lmsAPI.hasOwnProperty("GetStudentName")){
-			//cloud.scorm.com
-			console.log("Grade received from Simulation: ")
-			console.log(grade)
-			console.log("--------------");
-			console.log("Setting Score to LMS: "+grade);
-			lmsAPI.SetScore(grade,100,0);
-			if(Number(grade)>50){
-				lmsAPI.SetPassed();
-			}else{
-				lmsAPI.SetFailed();
-			}
-			alert("Grade received: "+grade+", you can now quit the exercise.")
-			lmsAPI.ExecFinish("Finish");
-			gradeSent = true;
 		}
-	//run function//
 	}else if(data.toString().startsWith("LaunchSimulation")){
 		loadMobaCloudModel(data.toString().split("$")[1])
 	}

@@ -176,12 +176,13 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 	lmsUsersDB.find({hostname:decodeURIComponent(req.params.hostname),lmsid:decodeURIComponent(req.params.lmsid)}).toArray()
 	.then((users)=>{
 		if(users.length>0){
-			res.redirect(users[0].url)
+			res.redirect(users[0].url+"?modelpath="+req.query.modelpath)
 		}else{
 			res.render("lmsLogin",{
 				message: "Input your activation code",
 				hostname: decodeURIComponent(req.params.hostname),
 				lmsid: decodeURIComponent(req.params.lmsid),
+				modelpath: req.query.modelpath,
 				bucket: bucket
 			})
 		}
@@ -208,7 +209,7 @@ server.post('/lmsLogin',async (req,res)=>{
 			.then((dbResponse)=>{
 				lmsUsersDB.insertOne(json)
 				.then((dbResponse2)=>{
-					res.redirect(json.url);
+					res.redirect(json.url+"?modelpath="+req.body.modelpath);
 				})
 				.catch((error)=>{
 					console.log(error)
@@ -232,6 +233,7 @@ server.post('/lmsLogin',async (req,res)=>{
 				message: "<span style=\"color:rgb(220,0,0)\">Activation code not recognized</span>",
 				hostname: req.body.hostname,
 				lmsid: req.body.lmsid,
+				modelpath: req.body.modelpath,
 				bucket: bucket
 			})
 		}
