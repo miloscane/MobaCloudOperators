@@ -9,19 +9,19 @@ setInterval(function(){
 			if(lmsAPI.API.hasOwnProperty("LMSGetValue")){
 				if(lmsAPI.API.LMSGetValue("cmi.core.student_id")!=""){
 					setTimeout(function(){
-						//lmsAPI.API.LMSInitialize();
+						lmsAPI.API.LMSInitialize();
 						iFrameBuilt = true;
 						//console.log("Student name:");
 						//var name = lmsAPI.API.LMSGetValue("cmi.core.student_name");
 						//console.log(name);
 						//console.log("--------------");
 						//console.log("Student ID:");
-						//var studentId = lmsAPI.API.LMSGetValue("cmi.core.student_id");
+						var studentId = lmsAPI.API.LMSGetValue("cmi.core.student_id");
 						//console.log(studentId);
 						//console.log("--------------");
 						//console.log("Hostname:");
 						//console.log(location.hostname);
-						generateMobaCloudIframe(lmsAPI.API.LMSGetValue("cmi.core.student_id"),location.hostname);
+						generateMobaCloudIframe(studentId,location.hostname);
 					},2000)
 					
 				}else{
@@ -62,7 +62,7 @@ function loadMobaCloudModel(modelPath){
 	mobacloudIframe.setAttribute("src","https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(mobacloudIframe.dataset.hostname)+"/"+encodeURIComponent(mobacloudIframe.dataset.id)+"?modelpath="+encodeURIComponent(modelPath));
 }
 
-function generateMobaCloudIframe(studentId,hostname){
+function generateMobaCloudIframe(studentIdF,hostnameF){
 	if(!document.getElementById("mobacloud-wrap")){
 		var iFrameDiv	=	document.createElement("DIV")
 		iFrameDiv.setAttribute("id","mobacloud-wrap");
@@ -71,8 +71,8 @@ function generateMobaCloudIframe(studentId,hostname){
 			//iframe.setAttribute("src","https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(location.hostname)+"/"+encodeURIComponent(id))
 			iframe.setAttribute("scrolling","no");
 			iframe.setAttribute("id","mobacloud");
-			iframe.setAttribute("data-id",studentId);
-			iframe.setAttribute("data-hostname",hostname);
+			iframe.setAttribute("data-id",studentIdF);
+			iframe.setAttribute("data-hostname",hostnameF);
 			iframe.setAttribute("style","width:100%;height:800px")
 			iFrameDiv.appendChild(iframe);
 		//document.getElementsByTagName("body")[0].appendChild(iFrameDiv)
