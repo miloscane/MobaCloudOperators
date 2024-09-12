@@ -1,1 +1,1 @@
-console.log("Loaded scorm script v1.1");
+console.log("Loaded scorm script v1.2");
