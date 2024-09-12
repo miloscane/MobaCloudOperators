@@ -1,7 +1,7 @@
-console.log("Loaded scorm script v1.5");
+console.log("Loaded scorm script v1.6");
 
 setInterval(function(){
-	var allImages = document.getElementsByTagName("IMG");
+	var allImages = document.getElementsByTagName("img");
 	console.log("All image");
 	console.log(allImages)
 	for(var i=0;i<allImages.length;i++){
