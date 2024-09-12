@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v1.8");
+console.log("Loaded scorm script v1.9");
 
 var lmsAPI = parent;
 var iFrameBuilt = false;
@@ -57,6 +57,11 @@ setInterval(function(){
 	}	
 },1000)
 
+function loadMobaCloudModel(modelPath){
+	var mobacloudIframe = document.getElementById("mobacloud");
+	mobacloudIframe.setAttribute("src","https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(mobacloudIframe.dataset.hostname)+"/"+encodeURIComponent(mobacloudIframe.dataset.id)+"?modelpath="+encodeURIComponent(modelPath));
+}
+
 function generateMobaCloudIframe(studentId,hostname){
 	if(!document.getElementById("mobacloud-wrap")){
 		var iFrameDiv	=	document.createElement("DIV")
@@ -79,7 +84,4 @@ function generateMobaCloudIframe(studentId,hostname){
 	
 }
 
-function loadMobaCloudModel(modelPath){
-	var mobacloudIframe = document.getElementById("mobacloud");
-	mobacloudIframe.setAttribute("src","https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(mobacloudIframe.dataset.hostname)+"/"+encodeURIComponent(mobacloudIframe.dataset.id)+"?modelpath="+encodeURIComponent(modelPath));
-}
+
