@@ -78,23 +78,28 @@ http.listen(process.env.PORT, function(){
 
 		//SDRI-VAZV-OQBO-WRKC
 
-		/*var codes = [];
-		for(var i=0;i<3;i++){
+		var codes = [];
+		for(var i=0;i<30;i++){
 			var json = {};
 			json.code = generateId(16);
 			json.type = 1;
+			json.customer = "Technicom"
 			json.date = getDateAsStringForInputObject(new Date());
-			json.url = "https://lms"+eval(i+1)+".modeller.cloud:3000/vnc.html?password=7b0ce21a0d8d3c7adec51d48abe2a3e9"
+			json.url = "https://technicomopc"+eval(i+1)+".modeller.cloud:3000/vnc.html?password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true"
 			codes.push(json)
 		}
 
 		lmsActivationCodesDB.insertMany(codes)
 		.then((dbR)=>{
 			console.log(dbR)
+			console.log("------------")
+			for(var i=0;i<codes.length;i++){
+				console.log(codes[i].code.substr(0, 4)+"-"+codes[i].code.substr(4, 4)+"-"+codes[i].code.substr(8, 4)+"-"+codes[i].code.substr(12, 4))
+			}
 		})
 		.catch((error)=>{
 			console.log(error)
-		})*/
+		})
 	})
 	.catch((error)=>{
 		console.log(error);
