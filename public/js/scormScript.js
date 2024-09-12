@@ -1,9 +1,9 @@
-console.log("Loaded scorm script v2.04");
+console.log("Loaded scorm script v2.05");
 
 function loadMobaCloudModel(modelPath){
 	console.log("LOADING MODEL....")
 	var mobacloudIframe = document.getElementById("mobacloud");
-	mobacloudIframe.setAttribute("src","https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(mobacloudIframe.dataset.hostname)+"/"+encodeURIComponent(mobacloudIframe.dataset.id)+"?modelpath="+encodeURIComponent(modelPath));
+	
 }
 
 var lmsAPI = parent;
@@ -59,8 +59,8 @@ setInterval(function(){
 
 			}
 			
-			elems[i].setAttribute("onclick","loadMobaCloudModel(\""+modelString+"\")");
-			console.log("Initialized an image for a click")
+			elems[i].setAttribute("onclick","document.getElementById('mobacloud').src='https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(document.getElementById('mobacloud').dataset.hostname)+"/"+encodeURIComponent(document.getElementById('mobacloud').dataset.id)+"?modelpath="+encodeURIComponent(modelString));
+			//console.log("Initialized an image for a click")
 
 		}
 	}	
