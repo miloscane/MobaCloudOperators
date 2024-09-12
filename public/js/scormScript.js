@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.07");
+console.log("Loaded scorm script v2.09");
 
 function loadMobaCloudModel(modelPath){
 	console.log("LOADING MODEL....")
@@ -59,7 +59,7 @@ setInterval(function(){
 
 			}
 			
-			elems[i].setAttribute("onclick","document.getElementById('mobacloud').src='https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(document.getElementById('mobacloud').dataset.hostname)+"/"+encodeURIComponent(document.getElementById('mobacloud').dataset.id)+"?modelpath="+encodeURIComponent(modelString)+"'");
+			elems[i].setAttribute("onclick","console.log('Sent message to parent');parent.postMessage('https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(document.getElementById('mobacloud').dataset.hostname)+"/"+encodeURIComponent(document.getElementById('mobacloud').dataset.id)+"?modelpath="+encodeURIComponent(modelString)+"')");
 			//console.log("Initialized an image for a click")
 
 		}
@@ -89,5 +89,73 @@ function generateMobaCloudIframe(studentIdF,hostnameF){
 	
 	
 }
+
+var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+var eventer = window[eventMethod];
+var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+var grade = "";
+var gradeSent	=	false;
+
+eventer(messageEvent,function(e) {
+	var key = e.message ? "message" : "data";
+	var data = e[key];
+	if(data.toString().includes("mobaGrade:") && !gradeSent){
+		grade = data.toString().split("Grade:")[1]
+		if(lmsAPI.hasOwnProperty("API")){
+			console.log("Found API")
+			if(lmsAPI.API.hasOwnProperty("LMSGetValue")){
+				console.log("Grade received from Simulation: ")
+				console.log(grade)
+				console.log("--------------");
+				console.log("Setting MIN Score (cmi.core.score.min) to 0")
+				lmsAPI.API.LMSSetValue("cmi.core.score.min",0)
+				console.log("Setting MAX Score (cmi.core.score.max) to 100")
+				console.log("--------------");
+				lmsAPI.API.LMSSetValue("cmi.core.score.max",100)
+				console.log("Setting RAW Score (cmi.core.score.raw) to "+grade)
+				console.log("--------------");
+				lmsAPI.API.LMSSetValue("cmi.core.score.raw",grade);
+				if(Number(grade)>50){
+					console.log("Setting lesson status to completed (cmi.core.lesson_status) to completed")
+					console.log("--------------");
+					lmsAPI.API.LMSSetValue("cmi.core.lesson_status","completed")
+				}else{
+					console.log("Setting lesson status to completed (cmi.core.lesson_status) to failed")
+					console.log("--------------");
+					lmsAPI.API.LMSSetValue("cmi.core.lesson_status","failed")
+				}
+				
+				console.log("Printing cmi.core Variables with LMSGetValue function:")
+				console.log("Min:" + lmsAPI.API.LMSGetValue("cmi.core.score.min"))
+				console.log("Max:" + lmsAPI.API.LMSGetValue("cmi.core.score.max"))
+				console.log("Raw:" + lmsAPI.API.LMSGetValue("cmi.core.score.raw"))
+				console.log("Status:" + lmsAPI.API.LMSGetValue("cmi.core.lesson_status"))
+				alert("Grade received: "+grade+", you can now quit the exercise.")
+				lmsAPI.API.LMSCommit("");
+				lmsAPI.API.LMSFinish("");
+				gradeSent = true;
+			}
+		}else if(lmsAPI.hasOwnProperty("GetStudentName")){
+			//cloud.scorm.com
+			console.log("Grade received from Simulation: ")
+			console.log(grade)
+			console.log("--------------");
+			console.log("Setting Score to LMS: "+grade);
+			lmsAPI.SetScore(grade,100,0);
+			if(Number(grade)>50){
+				lmsAPI.SetPassed();
+			}else{
+				lmsAPI.SetFailed();
+			}
+			alert("Grade received: "+grade+", you can now quit the exercise.")
+			lmsAPI.ExecFinish("Finish");
+			gradeSent = true;
+		}
+	//run function//
+	}else{
+		console.log("Received a message")
+		console.log(data);
+	}
+},false);
 
 
