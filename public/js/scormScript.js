@@ -1,8 +1,8 @@
 console.log("Loaded scorm script v1.6");
 
 setInterval(function(){
-	var allImages = document.getElementsByTagName("img");
-	console.log("All image");
+	var allImages = document.getElementsByClassName("img");
+	console.log("All image divs");
 	console.log(allImages)
 	for(var i=0;i<allImages.length;i++){
 		console.log(allImages[i].alt)
