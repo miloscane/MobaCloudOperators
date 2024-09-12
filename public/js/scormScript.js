@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v1.6");
+console.log("Loaded scorm script v1.8");
 
 var lmsAPI = parent;
 var iFrameBuilt = false;
@@ -9,8 +9,9 @@ setInterval(function(){
 			if(lmsAPI.API.hasOwnProperty("LMSGetValue")){
 				if(lmsAPI.API.LMSGetValue("cmi.core.student_id")!=""){
 					setTimeout(function(){
-						lmsAPI.API.LMSInitialize();
-						console.log("Student name:");
+						//lmsAPI.API.LMSInitialize();
+						iFrameBuilt = true;
+						//console.log("Student name:");
 						//var name = lmsAPI.API.LMSGetValue("cmi.core.student_name");
 						//console.log(name);
 						//console.log("--------------");
@@ -44,9 +45,9 @@ setInterval(function(){
 			elems[i].dataset.initizialized = 1;
 			var modelStringArray = elems[i].alt.split(":");
 			if(modelStringArray.length==3){
-				var modelString = "../"+modelStringArray[1]+"/"+modelStringArray[2]+"/"+modelStringArray[3]+"/model.mlr";
+				var modelString = "../"+modelStringArray[1]+"/"+modelStringArray[2]+"/model.mlr";
 			}else if(modelStringArray.length==4){
-				var modelString = "../"+modelStringArray[1]+"/"+modelStringArray[2]+"/"+modelStringArray[3]+"_"+modelStringArray[4]+"/model.mlr";
+				var modelString = "../"+modelStringArray[1]+"/"+modelStringArray[2]+"_"+modelStringArray[3]+"/model.mlr";
 
 			}
 			
@@ -72,7 +73,7 @@ function generateMobaCloudIframe(studentId,hostname){
 	document.getElementById("content").appendChild(iFrameDiv);
 	console.log("iFrame initialized");
 	console.log("---------------------------");
-	iFrameBuilt = true;
+	
 }
 
 function loadMobaCloudModel(modelPath){
