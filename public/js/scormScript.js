@@ -94,6 +94,7 @@ var eventer = window[eventMethod];
 var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 var grade = "";
 var gradeSent	=	false;
+var modelLoaded = false;
 
 eventer(messageEvent,function(e) {
 	var key = e.message ? "message" : "data";
@@ -139,6 +140,12 @@ eventer(messageEvent,function(e) {
 		}
 	}else if(data.toString().startsWith("LaunchSimulation")){
 		loadMobaCloudModel(data.toString().split("$")[1])
+	}else if(data.toString().startsWith("MobaCloud:")){
+		if(data.toString().split("obaCloud:")[1]=="ModelLoaded"){
+			displayMobaCloudModel()	
+		}	
+	}else{
+		//console.log(data);
 	}
 },false);
 
