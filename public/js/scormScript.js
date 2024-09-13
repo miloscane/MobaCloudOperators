@@ -1,9 +1,14 @@
-console.log("Loaded scorm script v2.16");
+console.log("Loaded scorm script v2.17");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
 	mobacloudIframe.src = model;
 	document.getElementById('content-frame').style.display = 'none';
+	document.getElementById('moba-loading').style.display = 'block';
+}
+
+function displayMobaCloudModel(){
+	document.getElementById('moba-loading').style.display = 'none';
 	document.getElementById('mobacloud-wrap').style.display = 'block';
 }
 
@@ -83,6 +88,20 @@ function generateMobaCloudIframe(studentIdF,hostnameF){
 			iFrameDiv.appendChild(iframe);
 		//document.getElementsByTagName("body")[0].appendChild(iFrameDiv)
 		document.getElementById("content").appendChild(iFrameDiv);
+
+		var loadingDiv = document.createElement("DIV");
+		loadingDiv.setAttribute("id","moba-loading");
+		loadingDiv.setAttribute("style","display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:999999;background-color:rgb(255,255,255)");
+			var loadingGif = document.createElement("IMG");
+			loadingGif.setAttribute("src","https://operators.modeller.cloud/loading.gif")
+			loadingGif.setAttribute("style","position:relative;display:block;text-align:center;margin-top:100px;width:256px;margin-bottom:20px");
+			loadingDiv.appendChild(loadingGif);
+
+			var loadingNote = document.createElement("DIV");
+			loadingNote.setAttribute("style","font-size:22px;font-weight:500;text-align:center;color:rgb(100,100,100)");
+			loadingNote.innerHTML = "Loading model...";
+			loadingDiv.appendChild(loadingNote);
+		document.getElementById("content").appendChild(loadingDiv);
 		console.log("iFrame initialized");
 	}
 	
