@@ -94,7 +94,7 @@ function generateMobaCloudIframe(studentIdF,hostnameF){
 		loadingDiv.setAttribute("style","display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:999999;background-color:rgb(255,255,255)");
 			var loadingGif = document.createElement("IMG");
 			loadingGif.setAttribute("src","https://operators.modeller.cloud/loading.gif")
-			loadingGif.setAttribute("style","position:relative;display:block;text-align:center;margin-top:100px;width:256px;margin-bottom:20px");
+			loadingGif.setAttribute("style","position:relative;display:block;text-align:center;margin:0 auto;margin-top:100px;width:256px;margin-bottom:20px");
 			loadingDiv.appendChild(loadingGif);
 
 			var loadingNote = document.createElement("DIV");
@@ -158,10 +158,11 @@ eventer(messageEvent,function(e) {
 			}
 		}
 	}else if(data.toString().startsWith("LaunchSimulation")){
-		loadMobaCloudModel(data.toString().split("$")[1])
+		loadMobaCloudModel(data.toString().split("$")[1]);
+		displayMobaCloudModel();
 	}else if(data.toString().startsWith("MobaCloud:")){
 		if(data.toString().split("obaCloud:")[1]=="ModelLoaded"){
-			displayMobaCloudModel()	
+			//displayMobaCloudModel()	
 		}	
 	}else{
 		//console.log(data);

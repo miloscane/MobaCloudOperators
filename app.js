@@ -98,6 +98,14 @@ http.listen(process.env.PORT, function(){
 		.catch((error)=>{
 			console.log(error)
 		})*/
+
+		/*lmsActivationCodesDB.deleteMany({date:"2024-09-12"})
+		.then((dbResponse)=>{
+			console.log(dbResponse)
+		})
+		.catch((error)=>{
+			console.log(error)
+		})*/
 	})
 	.catch((error)=>{
 		console.log(error);

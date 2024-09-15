@@ -37,6 +37,7 @@
 						document.getElementById("form").submit();
 					}
 				}
+				parentPort.postMessage("MobaCloud:LMSLogin","*")
 			</script>
 			<form id="form" method="POST" action="/lmsLogin" style="display:none">
 				<input type="text" id="code" name="code">
