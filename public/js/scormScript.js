@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.18");
+console.log("Loaded scorm script v2.19");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
@@ -18,10 +18,11 @@ var iFrameBuilt = false;
 setInterval(function(){
 	if(!iFrameBuilt){
 		if(lmsAPI.hasOwnProperty("API")){
+			lmsAPI.API.LMSInitialize();
 			if(lmsAPI.API.hasOwnProperty("LMSGetValue")){
 				if(lmsAPI.API.LMSGetValue("cmi.core.student_name")!=""){
 					//setTimeout(function(){
-						//lmsAPI.API.LMSInitialize();
+						//
 						iFrameBuilt = true;
 						//console.log("Student name:");
 						//var name = lmsAPI.API.LMSGetValue("cmi.core.student_name");
