@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.17");
+console.log("Loaded scorm script v2.18");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
