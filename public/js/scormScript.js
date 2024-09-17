@@ -70,7 +70,58 @@ setInterval(function(){
 
 		}
 	}	
-},1000)
+},1000);
+
+//SCALING THE IFRAME
+var scaleFactor = 1;
+setInterval(function(){
+	if(document.getElementById("mobacloud-wrap")){
+		var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+		var iframe = document.getElementById("mobacloud");
+		var iframeBox = iframe.getBoundingClientRect();
+		var siteFrame = document.getElementById("mobacloud-wrap").getBoundingClientRect();
+		/*console.log("Site frame: "+siteFrame.width)
+		console.log("Simulator: "+iframeBox.width);
+		console.log("Scale factor: "+scaleFactor);
+		console.log("-----------------------------------")*/
+		var heightFits = false;
+		var widthFits = false;
+		if(iframeBox.width<siteFrame.width || iframeBox.width<siteFrame.width-siteFrame.width*0.01){
+			//width fits
+			//console.log("width fits")
+			widthFits = true;
+		}else if(iframeBox.width>siteFrame.width){
+			scaleFactor = scaleFactor - 0.02*scaleFactor;
+			iframe.setAttribute("data-scale",scaleFactor);
+			iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+		}else if(iframeBox.width<siteFrame.width){
+			scaleFactor = scaleFactor + 0.02*scaleFactor;
+			iframe.setAttribute("data-scale",scaleFactor);
+			iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+		}
+
+		if(iframeBox.height<siteFrame.height || iframeBox.height<siteFrame.height+siteFrame.height*0.01){
+			//height fits
+			heightFits = true;
+		}else if(iframeBox.height>siteFrame.height){
+			scaleFactor = scaleFactor - 0.02*scaleFactor;
+			iframe.setAttribute("data-scale",scaleFactor);
+			iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+		}else if(iframeBox.height<siteFrame.height){
+			scaleFactor = scaleFactor + 0.02*scaleFactor;
+			iframe.setAttribute("data-scale",scaleFactor);
+			iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+		}
+
+		if(heightFits && widthFits){
+			if(iframeBox.width<siteFrame.width-0.03*siteFrame.width && iframeBox.height<siteFrame.height-0.03*siteFrame.height){
+				scaleFactor = scaleFactor + 0.02*scaleFactor;
+				iframe.setAttribute("data-scale",scaleFactor);
+				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+			}
+		}	
+	}
+},20)
 
 
 
@@ -78,14 +129,15 @@ function generateMobaCloudIframe(studentIdF,hostnameF){
 	if(!document.getElementById("mobacloud-wrap")){
 		var iFrameDiv	=	document.createElement("DIV")
 		iFrameDiv.setAttribute("id","mobacloud-wrap");
-		iFrameDiv.setAttribute("style","display:none;width:100%;max-width:1230px;margin:0 auto;")
+		//iFrameDiv.setAttribute("style","display:none;width:100%;max-width:1230px;margin:0 auto;")
+		iFrameDiv.setAttribute("style","display:none;position:relative;overflow:hidden;width:100vw;height:100vh;background:rgb(37,78,118);background: linear-gradient(0deg, rgb(20, 42, 64), rgb(37, 78, 118));")
 			var iframe = document.createElement("IFRAME");
 			//iframe.setAttribute("src","https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(location.hostname)+"/"+encodeURIComponent(id))
 			iframe.setAttribute("scrolling","no");
 			iframe.setAttribute("id","mobacloud");
 			iframe.setAttribute("data-id",studentIdF);
 			iframe.setAttribute("data-hostname",hostnameF);
-			iframe.setAttribute("style","width:100%;height:800px")
+			iframe.setAttribute("style","width:1235px;height:1068px;position: absolute;top: 0;left: 0;transform-origin: top left;border:1px solid rgb(37,78,118);box-shadow:2px 2px 2px rgba(0,0,0,0.8);");
 			iFrameDiv.appendChild(iframe);
 		//document.getElementsByTagName("body")[0].appendChild(iFrameDiv)
 		document.getElementById("content").appendChild(iFrameDiv);
