@@ -131,13 +131,16 @@ function generateMobaCloudIframe(studentIdF,hostnameF){
 		iFrameDiv.setAttribute("id","mobacloud-wrap");
 		//iFrameDiv.setAttribute("style","display:none;width:100%;max-width:1230px;margin:0 auto;")
 		iFrameDiv.setAttribute("style","display:none;position:relative;overflow:hidden;width:100vw;height:100vh;background:rgb(37,78,118);background: linear-gradient(0deg, rgb(20, 42, 64), rgb(37, 78, 118));")
+			var styleDiv = document.createElement("STYLE");
+			styleDiv.innerHTML = "#mobacloud-wrap iframe{width:1235px;height:1068px;position: absolute;top: 0;left: 0;transform-origin: top left;border:1px solid rgb(37,78,118);box-shadow:2px 2px 2px rgba(0,0,0,0.8);}";
+			iFrameDiv.appendChild(styleDiv);
 			var iframe = document.createElement("IFRAME");
 			//iframe.setAttribute("src","https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(location.hostname)+"/"+encodeURIComponent(id))
 			iframe.setAttribute("scrolling","no");
 			iframe.setAttribute("id","mobacloud");
 			iframe.setAttribute("data-id",studentIdF);
 			iframe.setAttribute("data-hostname",hostnameF);
-			iframe.setAttribute("style","width:1235px;height:1068px;position: absolute;top: 0;left: 0;transform-origin: top left;border:1px solid rgb(37,78,118);box-shadow:2px 2px 2px rgba(0,0,0,0.8);");
+			//iframe.setAttribute("style","");
 			iFrameDiv.appendChild(iframe);
 		//document.getElementsByTagName("body")[0].appendChild(iFrameDiv)
 		document.getElementById("content").appendChild(iFrameDiv);
