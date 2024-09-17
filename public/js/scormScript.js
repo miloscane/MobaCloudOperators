@@ -21,7 +21,7 @@ setInterval(function(){
 			if(lmsAPI.API.hasOwnProperty("LMSGetValue")){
 				if(lmsAPI.API.LMSGetValue("cmi.core.student_name")!=""){
 					//setTimeout(function(){
-						lmsAPI.API.LMSInitialize();
+						//lmsAPI.API.LMSInitialize();
 						iFrameBuilt = true;
 						//console.log("Student name:");
 						//var name = lmsAPI.API.LMSGetValue("cmi.core.student_name");
@@ -119,7 +119,7 @@ eventer(messageEvent,function(e) {
 	var key = e.message ? "message" : "data";
 	var data = e[key];
 	if(data.toString().includes("mobaGradeFinal:") && !gradeSent){
-		grade = data.toString().split("Grade:")[1]
+		grade = data.toString().split("obaGradeFinal:")[1]
 		if(lmsAPI.hasOwnProperty("API")){
 			console.log("Found API")
 			if(lmsAPI.API.hasOwnProperty("LMSGetValue")){
