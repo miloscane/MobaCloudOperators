@@ -16,9 +16,11 @@ var lmsAPI = parent;
 var iFrameBuilt = false;
 
 setInterval(function(){
+	console.log("Displaying error function");
+	console.log(DisplayError)
 	if(!iFrameBuilt){
 		if(lmsAPI.hasOwnProperty("API")){
-			lmsAPI.API.LMSInitialize();
+			lmsAPI.API.LMSInitialize("");
 			if(lmsAPI.API.hasOwnProperty("LMSGetValue")){
 				if(lmsAPI.API.LMSGetValue("cmi.core.student_name")!=""){
 					//setTimeout(function(){
