@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.22");
+console.log("Loaded scorm script v2.23");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
@@ -14,6 +14,15 @@ function displayMobaCloudModel(){
 
 var lmsAPI = parent;
 var iFrameBuilt = false;
+var errorFunctionAltered = false;
+
+setInterval(function(){
+	if(DisplayError && !errorFunctionAltered){
+		DisplayError = function(str){console.log(str)};
+		errorFunctionAltered = true;
+		console.log("Altered error function");
+	}
+},200)
 
 setInterval(function(){
 	console.log("Displaying error function");
