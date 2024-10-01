@@ -1,10 +1,11 @@
 <%- include ("partials/header") -%>
 	<div style="position:relative;overflow:hidden;width:100vw;height:100vh;background-color:rgb(37,78,118);background-image:url('https://mobatec.azurewebsites.net/images/edu-lic.jpeg');background-size:cover;background-position:right center;" id="site-frame">
 		<iframe id="iframe" src=""></iframe>
+		
 	</div>
 	
 	<script>
-		var url = document.getElementById("iframe").src="<%=url%>"
+		var url = document.getElementById("iframe").src="<%=url%>"+"&autoconnect=true"
 		var scaleFactor = 1;
 		setInterval(function(){
 			var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
