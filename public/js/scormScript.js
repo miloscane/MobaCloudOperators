@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.25");
+console.log("Loaded scorm script v2.26");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
@@ -229,6 +229,42 @@ eventer(messageEvent,function(e) {
 		if(data.toString().split("obaCloud:")[1]=="ModelLoaded"){
 			//displayMobaCloudModel()	
 		}	
+	}else if(data.toString().includes("Trio") && !gradeSent){
+		document.getElementById('content-frame').style.display = 'block';
+		document.getElementById('mobacloud-wrap').style.display = 'none';
+		if(data.toString().includes("Trio3")){
+			grade = data.toString().split("Trio3:")[1]
+			console.log("Final Grade received from Simulation: ")
+			console.log(grade)
+			console.log("--------------");
+			console.log("Setting MIN Score (cmi.core.score.min) to 0")
+			lmsAPI.API.LMSSetValue("cmi.core.score.min",0)
+			console.log("Setting MAX Score (cmi.core.score.max) to 100")
+			console.log("--------------");
+			lmsAPI.API.LMSSetValue("cmi.core.score.max",100)
+			console.log("Setting RAW Score (cmi.core.score.raw) to "+grade)
+			console.log("--------------");
+			lmsAPI.API.LMSSetValue("cmi.core.score.raw",grade);
+			if(Number(grade)>50){
+				console.log("Setting lesson status to completed (cmi.core.lesson_status) to completed")
+				console.log("--------------");
+				lmsAPI.API.LMSSetValue("cmi.core.lesson_status","completed")
+			}else{
+				console.log("Setting lesson status to completed (cmi.core.lesson_status) to failed")
+				console.log("--------------");
+				lmsAPI.API.LMSSetValue("cmi.core.lesson_status","failed")
+			}
+			
+			/*console.log("Printing cmi.core Variables with LMSGetValue function:")
+			console.log("Min:" + lmsAPI.API.LMSGetValue("cmi.core.score.min"))
+			console.log("Max:" + lmsAPI.API.LMSGetValue("cmi.core.score.max"))
+			console.log("Raw:" + lmsAPI.API.LMSGetValue("cmi.core.score.raw"))
+			console.log("Status:" + lmsAPI.API.LMSGetValue("cmi.core.lesson_status"))*/
+			alert("Grade received: "+grade+", you can now quit the exercise.")
+			lmsAPI.API.LMSCommit("");
+			lmsAPI.API.LMSFinish("");
+			gradeSent = true;
+		}
 	}else{
 		//console.log(data);
 	}
