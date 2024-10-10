@@ -180,6 +180,12 @@ server.get('/tata1',async (req,res)=>{
 	}
 });
 
+server.get('/teacher',async (req,res)=>{
+	res.render("teacher",{
+		bucket: bucket
+	});
+});
+
 server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 	lmsUsersDB.find({hostname:decodeURIComponent(req.params.hostname),lmsid:decodeURIComponent(req.params.lmsid)}).toArray()
 	.then((users)=>{

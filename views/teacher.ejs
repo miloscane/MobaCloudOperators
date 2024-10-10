@@ -1,0 +1,84 @@
+<%- include ("partials/header") -%>
+<div class="teacher">
+	<div id="header">
+		<button onclick="loadModel('../../Module_2/Exercise_1')">Module 2<br>Exercise 1</button>
+		<button onclick="loadModel('../../Module_2/Exercise_2')">Module 2<br>Exercise 2</button>
+		<button onclick="loadModel('../../Module_2/Exercise_3')">Module 2<br>Exercise 3</button>
+		<button onclick="loadModel('../../Module_2/Exercise_4')">Module 2<br>Exercise 4</button>
+		<button onclick="loadModel('../../Module_2/Exercise_5')">Module 2<br>Exercise 5</button>
+		<button onclick="loadModel('../../Module_2/Exercise_6')">Module 2<br>Exercise 6</button>
+		<button onclick="loadModel('../../Module_2/Exercise_7')">Module 2<br>Exercise 7</button>
+		<button onclick="loadModel('../../Module_2/Exercise_8')">Module 2<br>Exercise 8</button>
+		<button onclick="loadModel('../../Module_2/Exercise_9')">Module 2<br>Exercise 9</button>
+		<button onclick="loadModel('../../Module_3/Exercise_1')">Module 2<br>Exercise 1</button>
+		<button onclick="loadModel('../../Module_3/Exercise_2')">Module 2<br>Exercise 2</button>
+		<button onclick="loadModel('../../Module_5/Exercise_1')">Module 2<br>Exercise 1</button>
+		<button onclick="loadModel('../../Module_5/Exercise_2')">Module 2<br>Exercise 2</button>
+	</div>
+	<div style="position:relative;overflow:hidden;width:100vw;height:100vh;background-color:rgb(37,78,118);background-image:url('https://mobatec.azurewebsites.net/images/edu-lic.jpeg');background-size:cover;background-position:right center;" id="site-frame">
+		<iframe id="iframe" src=""></iframe>
+		<script>
+			var url = window.location.href;
+			var mobaurl = decodeURIComponent(url.split("?url=")[1]);
+			mobaurl = mobaurl + "vnc.html?password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true";
+
+			function loadModel(str){
+				document.getElementById("iframe").src=mobaurl+"&model="+encodeURIComponent(str); 
+				//console.log(mobaurl+"&model="+encodeURIComponent(str))
+			}
+		</script>
+	</div>
+	
+	<script>
+		var scaleFactor = 1;
+		setInterval(function(){
+			var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+			var iframe = document.getElementById("iframe");
+			var iframeWrap = document.getElementById("iframeWrap")
+			var iframeBox = iframe.getBoundingClientRect();
+			var siteFrame = document.getElementById("site-frame").getBoundingClientRect();
+			/*console.log("Site frame: "+siteFrame.width)
+			console.log("Simulator: "+iframeBox.width);
+			console.log("Scale factor: "+scaleFactor);
+			console.log("-----------------------------------")*/
+			var heightFits = false;
+			var widthFits = false;
+			if(iframeBox.width<siteFrame.width || iframeBox.width<siteFrame.width-siteFrame.width*0.01){
+				//width fits
+				//console.log("width fits")
+				widthFits = true;
+			}else if(iframeBox.width>siteFrame.width){
+				scaleFactor = scaleFactor - 0.02*scaleFactor;
+				iframe.setAttribute("data-scale",scaleFactor);
+				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+			}else if(iframeBox.width<siteFrame.width){
+				scaleFactor = scaleFactor + 0.02*scaleFactor;
+				iframe.setAttribute("data-scale",scaleFactor);
+				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+			}
+
+			if(iframeBox.height<siteFrame.height || iframeBox.height<siteFrame.height+siteFrame.height*0.15){
+				//height fits
+				heightFits = true;
+			}else if(iframeBox.height>siteFrame.height){
+				scaleFactor = scaleFactor - 0.02*scaleFactor;
+				iframe.setAttribute("data-scale",scaleFactor);
+				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+			}else if(iframeBox.height<siteFrame.height){
+				scaleFactor = scaleFactor + 0.02*scaleFactor;
+				iframe.setAttribute("data-scale",scaleFactor);
+				iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+			}
+
+			if(heightFits && widthFits){
+				if(iframeBox.width<siteFrame.width-0.03*siteFrame.width && iframeBox.height<siteFrame.height-0.03*siteFrame.height){
+					scaleFactor = scaleFactor + 0.02*scaleFactor;
+					iframe.setAttribute("data-scale",scaleFactor);
+					iframe.setAttribute("style","transform:scale("+scaleFactor+")");
+				}
+			}
+
+		},20)
+	</script>
+</div>
+<%- include ("partials/footer") -%>
