@@ -117,7 +117,7 @@ function generateMobaCloudIframe(studentIdF,hostnameF){
 			//iframe.setAttribute("style","");
 			iFrameDiv.appendChild(iframe);
 		//document.getElementsByTagName("body")[0].appendChild(iFrameDiv)
-		document.getElementById("content").appendChild(iFrameDiv);
+		document.getElementById("app").appendChild(iFrameDiv);
 
 		var loadingDiv = document.createElement("DIV");
 		loadingDiv.setAttribute("id","moba-loading");
@@ -131,7 +131,7 @@ function generateMobaCloudIframe(studentIdF,hostnameF){
 			loadingNote.setAttribute("style","font-size:22px;font-weight:500;text-align:center;color:rgb(100,100,100)");
 			loadingNote.innerHTML = "Loading model...";
 			loadingDiv.appendChild(loadingNote);
-		document.getElementById("content").appendChild(loadingDiv);
+		document.getElementById("app").appendChild(loadingDiv);
 		console.log("iFrame initialized");
 	}
 	
