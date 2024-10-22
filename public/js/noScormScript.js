@@ -18,7 +18,6 @@ setInterval(function(){
 	if(!iFrameBuilt){
 		iFrameBuilt = true;
 		console.log("Student ID:");
-		var url = ;
 		var studentId = window.location.href.split("studentID=")[1];
 		console.log(studentId);
 		generateMobaCloudIframe(studentId,location.hostname);
