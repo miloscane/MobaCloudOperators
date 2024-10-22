@@ -26,7 +26,8 @@ setInterval(function(){
 
 
 setInterval(function(){
-	var elems = document.getElementById("content-frame").contentWindow.document.getElementsByTagName("IMG");
+	//var elems = document.getElementById("content-frame").contentWindow.document.getElementsByTagName("IMG");
+	var elems = document.getElementById("app").getElementsByTagName("IMG");
 	for(var i=0;i<elems.length;i++){
 		if(elems[i].alt.startsWith("MobaCloudOpC") && Number(elems[i].dataset.initizialized)!="1" && document.getElementById("mobacloud")){
 			elems[i].dataset.initizialized = 1;
