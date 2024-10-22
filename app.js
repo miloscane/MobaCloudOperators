@@ -77,14 +77,14 @@ http.listen(process.env.PORT, function(){
 		lmsUsersDB				=	client.db("MobaCloud").collection('LMSUsers');
 
 		/*var codes = [];
-		for(var i=0;i<30;i++){
+		for(var i=31;i<60;i++){
 			var json = {};
 			json.code = generateId(16);
-			json.type = 1;
+			json.type = 2;
 			json.customer = "Technicom"
 			json.date = getDateAsStringForInputObject(new Date());
 			json.url = "https://technicomopc"+eval(i+1)+".modeller.cloud:3000/vnc.html?password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true"
-			codes.push(json)
+			codes.push(json);
 		}
 
 		lmsActivationCodesDB.insertMany(codes)
