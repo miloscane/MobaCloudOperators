@@ -1,9 +1,9 @@
-console.log("Loaded scorm script v1.01");
+console.log("Loaded scorm script v1.02");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
 	mobacloudIframe.src = model;
-	document.getElementById('content-frame').style.display = 'none';
+	document.getElementById('app').style.display = 'none';
 	document.getElementById('moba-loading').style.display = 'block';
 }
 
@@ -117,7 +117,7 @@ function generateMobaCloudIframe(studentIdF,hostnameF){
 			//iframe.setAttribute("style","");
 			iFrameDiv.appendChild(iframe);
 		//document.getElementsByTagName("body")[0].appendChild(iFrameDiv)
-		document.getElementById("app").appendChild(iFrameDiv);
+		document.getElementsByTagName("body")[0].appendChild(iFrameDiv);
 
 		var loadingDiv = document.createElement("DIV");
 		loadingDiv.setAttribute("id","moba-loading");
@@ -131,7 +131,7 @@ function generateMobaCloudIframe(studentIdF,hostnameF){
 			loadingNote.setAttribute("style","font-size:22px;font-weight:500;text-align:center;color:rgb(100,100,100)");
 			loadingNote.innerHTML = "Loading model...";
 			loadingDiv.appendChild(loadingNote);
-		document.getElementById("app").appendChild(loadingDiv);
+		document.getElementsByTagName("body")[0].appendChild(loadingDiv);
 		console.log("iFrame initialized");
 	}
 	
