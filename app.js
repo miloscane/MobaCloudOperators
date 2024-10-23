@@ -76,6 +76,18 @@ http.listen(process.env.PORT, function(){
 		lmsActivationCodesDB		=	client.db("MobaCloud").collection('LMSActivationCodes');
 		lmsUsersDB				=	client.db("MobaCloud").collection('LMSUsers');
 
+		/*lmsUsersDB.find({}).toArray()
+		.then((users)=>{
+			var csvString = "LMS,Username,Customer,Activation Date,Code\r\n";
+			for(var i=0;i<users.length;i++){
+				csvString += users[i].hostname + ","+users[i].lmsid + ",Technicom,2024-09-11," +  users[i].code + "\r\n"
+			}
+			fs.writeFileSync("./Users.csv",csvString,"utf8");	
+		})
+		.catch((error)=>{
+			console.log(error)
+		})*/
+
 		/*var codes = [];
 		for(var i=31;i<60;i++){
 			var json = {};
@@ -219,6 +231,7 @@ server.post('/lmsLogin',async (req,res)=>{
 			json.url = codes[0].url;
 			json.hostname = req.body.hostname;
 			json.lmsid = req.body.lmsid;
+			json.datetime = new Date().getTime();
 			lmsActivationCodesDB.deleteOne({code:req.body.code})
 			.then((dbResponse)=>{
 				lmsUsersDB.insertOne(json)
