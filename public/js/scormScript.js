@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.34");
+console.log("Loaded scorm script v2.35");
 
 var modelLoaded = false;
 
@@ -36,7 +36,7 @@ setInterval(function(){
 	}else{
 		//console.log("I am not gonna refresh the iframe now")
 	}
-},1000)
+},5000)
 
 setInterval(function(){
 	if(!iFrameBuilt && errorFunctionAltered){
