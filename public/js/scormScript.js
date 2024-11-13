@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.32");
+console.log("Loaded scorm script v2.33");
 
 var modelLoaded = false;
 
@@ -30,12 +30,12 @@ setInterval(function(){
 var containerStarted = false;
 var refreshIframe = true;
 setInterval(function(){
-	if(!modelLoaded && iFrameBuilt && refreshIframe){
+	if(!containerStarted && iFrameBuilt && refreshIframe){
 		document.getElementById("mobacloud").src = document.getElementById("mobacloud").src;
 		console.log("Refreshed iFrame...")
 		refreshIframe = false;
 	}else{
-		console.log("I am not gonna refresh the iframe now")
+		//console.log("I am not gonna refresh the iframe now")
 	}
 },1000)
 
@@ -290,7 +290,7 @@ eventer(messageEvent,function(e) {
 			gradeSent = true;
 		}
 	}else if(data.toString().includes("ContainerStarted")){
-		console.log("Container STARTED!!")
+		console.log("Container STARTED!!");
 		containerStarted = true;
 	}else{
 		//console.log(data);
