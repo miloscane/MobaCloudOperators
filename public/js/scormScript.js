@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.30");
+console.log("Loaded scorm script v2.31");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
@@ -286,7 +286,8 @@ eventer(messageEvent,function(e) {
 			lmsAPI.API.LMSFinish("");
 			gradeSent = true;
 		}
-	}else if(data.toString().includes("ContainerStarted") && !gradeSent){
+	}else if(data.toString().includes("ContainerStarted")){
+		console.log("Container STARTED!!")
 		containerStarted = true;
 	}else{
 		//console.log(data);
