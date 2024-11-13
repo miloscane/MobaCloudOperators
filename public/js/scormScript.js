@@ -1,8 +1,11 @@
-console.log("Loaded scorm script v2.31");
+console.log("Loaded scorm script v2.32");
+
+var modelLoaded = false;
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
 	mobacloudIframe.src = model;
+	modelLoaded = true;
 	document.getElementById('content-frame').style.display = 'none';
 	document.getElementById('moba-loading').style.display = 'block';
 }
@@ -27,7 +30,7 @@ setInterval(function(){
 var containerStarted = false;
 var refreshIframe = true;
 setInterval(function(){
-	if(!containerStarted && iFrameBuilt && refreshIframe){
+	if(!modelLoaded && iFrameBuilt && refreshIframe){
 		document.getElementById("mobacloud").src = document.getElementById("mobacloud").src;
 		console.log("Refreshed iFrame...")
 		refreshIframe = false;
