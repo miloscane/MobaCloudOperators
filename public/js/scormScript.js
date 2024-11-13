@@ -40,7 +40,7 @@ setInterval(function(){
 						//console.log("Student ID:");
 						console.log("Student ID:");
 						var studentId = lmsAPI.API.LMSGetValue("cmi.core.student_id");
-						console.log(studentId);
+						//console.log(studentId);
 						//console.log("--------------");
 						//console.log("Hostname:");
 						//console.log(location.hostname);
@@ -143,6 +143,15 @@ function generateMobaCloudIframe(studentIdF,hostnameF){
 			var styleDiv = document.createElement("STYLE");
 			styleDiv.innerHTML = "#mobacloud-wrap iframe{width:1235px;height:1090px;position: absolute;top: 0;left: 0;transform-origin: top left;border:1px solid rgb(37,78,118);box-shadow:2px 2px 2px rgba(0,0,0,0.8);}";
 			iFrameDiv.appendChild(styleDiv);
+
+			var refreshButton = document.createElement("DIV");
+			refreshButton.setAttribute("style","cursor:pointer;position:absolute;top:0;right:0;padding:3px;font-size:12px;background-color:rgb(37,78,118);color:rgb(255,255,255);border:1px solid rgb(100,100,100);")
+			refreshButton.setAttribute("onclick","document.getElementById(\"mobacloud\").src = document.getElementById(\"mobacloud\").src;console.log(\"Refreshed Simulator\")")
+			refreshButton.setAttribute("onmousedown","this.style.transform = \"scale(0.95)\"");
+			refreshButton.setAttribute("onmouseup","this.style.transform = \"scale(1)\"");
+			refreshButton.innerHTML = "Reload Simulator";
+			iFrameDiv.appendChild(refreshButton);
+
 			var iframe = document.createElement("IFRAME");
 			//iframe.setAttribute("src","https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(location.hostname)+"/"+encodeURIComponent(id))
 			iframe.setAttribute("scrolling","no");

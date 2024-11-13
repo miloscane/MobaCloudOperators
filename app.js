@@ -11,6 +11,7 @@ const session			=	require('express-session');
 const cookieParser		=	require('cookie-parser');
 const io				=	require('socket.io')(http);
 const nodemailer		=	require('nodemailer');
+const axios				=	require('axios');
 dotenv.config();
 
 server.set('view engine','ejs');
@@ -75,6 +76,22 @@ http.listen(process.env.PORT, function(){
 		usersDB		=	client.db("MobaHub").collection('Modeller Cloud');
 		lmsActivationCodesDB		=	client.db("MobaCloud").collection('LMSActivationCodes');
 		lmsUsersDB				=	client.db("MobaCloud").collection('LMSUsers');
+
+		/*lmsUsersDB.find({}).toArray()
+		.then((users)=>{
+			users.sort((a, b) => {
+				if (a.url < b.url) return -1;
+				if (a.url > b.url) return 1;
+				return 0;
+			});
+			for(var i=0;i<users.length;i++){
+				console.log(users[i].url.split(".modeller")[0])
+				console.log("-------")
+			}
+		})
+		.catch((error)=>{
+			console.log(error)
+		})*/
 
 		/*lmsUsersDB.find({}).toArray()
 		.then((users)=>{
@@ -202,7 +219,25 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 	lmsUsersDB.find({hostname:decodeURIComponent(req.params.hostname),lmsid:decodeURIComponent(req.params.lmsid)}).toArray()
 	.then((users)=>{
 		if(users.length>0){
-			res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
+			axios.post('https://student.instances.modeller.cloud/start', new URLSearchParams({uuid: users[0].code}))
+			.then((dockerResponse)=>{
+				//console.log(response);
+				//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
+				res.redirect("https://student.instances.modeller.cloud/connect/"+users[0].code+"/vnc.html?path=connect/"+users[0].code+"/websocketify&password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true")
+				//console.log("Redirected to: "+users[0].url+"&modelpath="+req.query.modelpath);
+			})
+			.catch((error)=>{
+				if(error.status==409){
+					res.redirect("https://student.instances.modeller.cloud/connect/"+users[0].code+"/vnc.html?path=connect/"+users[0].code+"/websocketify&password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true")
+				}else{
+					res.render("message",{
+						message: "Container start error "+error.status+". If the problem persists e-mail us on <a href=\"mailto:info@mobatec.nl\">info@mobatec.nl</a>",
+						bucket: bucket
+					})
+				}
+				
+			})
+			
 		}else{
 			res.render("lmsLogin",{
 				message: "Input your activation code",
