@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.33");
+console.log("Loaded scorm script v2.34");
 
 var modelLoaded = false;
 
@@ -30,10 +30,9 @@ setInterval(function(){
 var containerStarted = false;
 var refreshIframe = true;
 setInterval(function(){
-	if(!containerStarted && iFrameBuilt && refreshIframe){
+	if(!containerStarted && iFrameBuilt){
 		document.getElementById("mobacloud").src = document.getElementById("mobacloud").src;
 		console.log("Refreshed iFrame...")
-		refreshIframe = false;
 	}else{
 		//console.log("I am not gonna refresh the iframe now")
 	}
