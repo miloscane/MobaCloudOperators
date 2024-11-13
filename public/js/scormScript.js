@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.28");
+console.log("Loaded scorm script v2.29");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
@@ -23,6 +23,14 @@ setInterval(function(){
 		console.log("Altered error function");
 	}
 },200)
+
+var containerStarted = false;
+setInterval(function(){
+	if(!containerStarted && iFrameBuilt){
+		console.log(document.getElementById("mobacloud").contentWindow.document.getElementById("hide-toolbar"))
+		containerStarted;
+	}
+},1000)
 
 setInterval(function(){
 	if(!iFrameBuilt && errorFunctionAltered){

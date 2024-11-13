@@ -215,6 +215,17 @@ server.get('/teacher',async (req,res)=>{
 	});
 });
 
+/*axios.post('https://student.instances.modeller.cloud/stop', new URLSearchParams({uuid: "ABCDABCDABCDABC1"}))
+.then((dockerResponse)=>{
+	//console.log(response);
+	//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
+	//console.log("Redirected to: "+users[0].url+"&modelpath="+req.query.modelpath);
+	console.log(dockerResponse)
+})
+.catch((error)=>{
+	console.log(error);	
+})*/
+
 server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 	lmsUsersDB.find({hostname:decodeURIComponent(req.params.hostname),lmsid:decodeURIComponent(req.params.lmsid)}).toArray()
 	.then((users)=>{
