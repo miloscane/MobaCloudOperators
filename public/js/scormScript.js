@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.29");
+console.log("Loaded scorm script v2.30");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
@@ -25,10 +25,14 @@ setInterval(function(){
 },200)
 
 var containerStarted = false;
+var refreshIframe = true;
 setInterval(function(){
-	if(!containerStarted && iFrameBuilt){
-		console.log(document.getElementById("mobacloud").contentWindow.document.getElementById("hide-toolbar"))
-		containerStarted;
+	if(!containerStarted && iFrameBuilt && refreshIframe){
+		document.getElementById("mobacloud").src = document.getElementById("mobacloud").src;
+		console.log("Refreshed iFrame...")
+		refreshIframe = false;
+	}else{
+		console.log("I am not gonna refresh the iframe now")
 	}
 },1000)
 
@@ -282,6 +286,8 @@ eventer(messageEvent,function(e) {
 			lmsAPI.API.LMSFinish("");
 			gradeSent = true;
 		}
+	}else if(data.toString().includes("ContainerStarted") && !gradeSent){
+		containerStarted = true;
 	}else{
 		//console.log(data);
 	}
