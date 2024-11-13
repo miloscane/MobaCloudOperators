@@ -236,12 +236,12 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 			.then((dockerResponse)=>{
 				//console.log(response);
 				//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
-				res.redirect("https://student.instances.modeller.cloud/connect/"+users[0].code+"/vnc.html?path=connect/"+users[0].code+"/websocketify&password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true&reconnect=true&modelpath="+encodeURIComponent(req.query.modelpath))
+				res.redirect("https://student.instances.modeller.cloud/connect/"+users[0].code+"/vnc.html?path=connect/"+users[0].code+"/websocketify&password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true&reconnect=true&modelpath="+req.query.modelpath)
 				//console.log("Redirected to: "+users[0].url+"&modelpath="+req.query.modelpath);
 			})
 			.catch((error)=>{
 				if(error.status==409){
-					res.redirect("https://student.instances.modeller.cloud/connect/"+users[0].code+"/vnc.html?path=connect/"+users[0].code+"/websocketify&password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true&reconnect=true&modelpath="+encodeURIComponent(req.query.modelpath))
+					res.redirect("https://student.instances.modeller.cloud/connect/"+users[0].code+"/vnc.html?path=connect/"+users[0].code+"/websocketify&password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true&reconnect=true&modelpath="+req.query.modelpath)
 				}else{
 					console.log(error)
 					res.render("message",{
