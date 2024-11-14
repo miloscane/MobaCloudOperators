@@ -1,11 +1,8 @@
-console.log("Loaded scorm script v2.35");
-
-var modelLoaded = false;
+console.log("Loaded scorm script v2.36");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
 	mobacloudIframe.src = model;
-	modelLoaded = true;
 	document.getElementById('content-frame').style.display = 'none';
 	document.getElementById('moba-loading').style.display = 'block';
 }
@@ -250,6 +247,11 @@ eventer(messageEvent,function(e) {
 		displayMobaCloudModel();
 	}else if(data.toString().startsWith("MobaCloud:")){
 		if(data.toString().split("obaCloud:")[1]=="ModelLoaded"){
+			//displayMobaCloudModel()	
+		}	
+	}else if(data.toString().startsWith("MobaCloud:")){
+		if(data.toString().split("obaCloud:")[1]=="ModelClosed"){
+			console.log("MODEL CLOSED!!!")
 			//displayMobaCloudModel()	
 		}	
 	}else if(data.toString().includes("Trio") && !gradeSent){
