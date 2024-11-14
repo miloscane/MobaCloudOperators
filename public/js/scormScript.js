@@ -27,9 +27,11 @@ setInterval(function(){
 var containerStarted = false;
 var refreshIframe = true;
 setInterval(function(){
+	console.log(document.getElementById("mobacloud").src)
+	console.log("---------------------------------------------------")
 	if(!containerStarted && iFrameBuilt){
 		document.getElementById("mobacloud").src = document.getElementById("mobacloud").src;
-		console.log("Refreshed iFrame...")
+		//console.log("Refreshed iFrame...")
 	}else{
 		//console.log("I am not gonna refresh the iframe now")
 	}
