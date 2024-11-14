@@ -249,8 +249,7 @@ eventer(messageEvent,function(e) {
 		if(data.toString().split("obaCloud:")[1]=="ModelLoaded"){
 			//displayMobaCloudModel()	
 		}else if(data.toString().split("obaCloud:")[1]=="ModelClosed"){
-			console.log("MODEL CLOSED!!!")
-			//displayMobaCloudModel()	
+			containerStarted = true;
 		}	
 	}else if(data.toString().includes("Trio") && !gradeSent){
 		document.getElementById('content-frame').style.display = 'block';
