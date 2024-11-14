@@ -24,7 +24,7 @@ setInterval(function(){
 	}
 },200)
 
-var containerStarted = false;
+/*var containerStarted = false;
 var refreshIframe = true;
 setInterval(function(){
 	console.log(document.getElementById("mobacloud").src)
@@ -35,7 +35,7 @@ setInterval(function(){
 	}else{
 		//console.log("I am not gonna refresh the iframe now")
 	}
-},5000)
+},5000)*/
 
 setInterval(function(){
 	if(!iFrameBuilt && errorFunctionAltered){
