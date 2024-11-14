@@ -1,4 +1,4 @@
-console.log("Loaded scorm script v2.36");
+console.log("Loaded scorm script v2.37");
 
 function loadMobaCloudModel(model){
 	var mobacloudIframe = document.getElementById("mobacloud");
@@ -248,9 +248,7 @@ eventer(messageEvent,function(e) {
 	}else if(data.toString().startsWith("MobaCloud:")){
 		if(data.toString().split("obaCloud:")[1]=="ModelLoaded"){
 			//displayMobaCloudModel()	
-		}	
-	}else if(data.toString().startsWith("MobaCloud:")){
-		if(data.toString().split("obaCloud:")[1]=="ModelClosed"){
+		}else if(data.toString().split("obaCloud:")[1]=="ModelClosed"){
 			console.log("MODEL CLOSED!!!")
 			//displayMobaCloudModel()	
 		}	
@@ -290,9 +288,6 @@ eventer(messageEvent,function(e) {
 			lmsAPI.API.LMSFinish("");
 			gradeSent = true;
 		}
-	}else if(data.toString().includes("ContainerStarted")){
-		console.log("Container STARTED!!");
-		containerStarted = true;
 	}else{
 		//console.log(data);
 	}
