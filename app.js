@@ -230,9 +230,9 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 	lmsUsersDB.find({hostname:decodeURIComponent(req.params.hostname),lmsid:decodeURIComponent(req.params.lmsid)}).toArray()
 	.then((users)=>{
 		if(users.length>0){
-
+			res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
 				//console.log(users[0].code)
-			axios.post('https://student.instances.modeller.cloud/start', new URLSearchParams({uuid: users[0].code}))
+			/*axios.post('https://student.instances.modeller.cloud/start', new URLSearchParams({uuid: users[0].code}))
 			.then((dockerResponse)=>{
 				//console.log(response);
 				//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
@@ -250,7 +250,7 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 					})
 				}
 				
-			})
+			})*/
 			
 		}else{
 			res.render("lmsLogin",{
