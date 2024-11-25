@@ -10,6 +10,12 @@
 		<button onclick="loadModel('../../Module_2/Exercise_7')">Module 2<br>Exercise 7</button>
 		<button onclick="loadModel('../../Module_2/Exercise_8')">Module 2<br>Exercise 8</button>
 		<button onclick="loadModel('../../Module_2/Exercise_9')">Module 2<br>Exercise 9</button>
+		<button onclick="loadModel('../../Module_2/Exercise_10')">Module 2<br>Exercise 10</button>
+		<button onclick="loadModel('../../Module_2/Exercise_11')">Module 2<br>Exercise 11</button>
+		<button onclick="loadModel('../../Module_2/Exercise_12')">Module 2<br>Exercise 12</button>
+		<button onclick="loadModel('../../Module_2/Exercise_13')">Module 2<br>Exercise 13</button>
+		<button onclick="loadModel('../../Module_2/Exercise_14')">Module 2<br>Exercise 14</button>
+		<button onclick="loadModel('../../Module_2/Exercise_15')">Module 2<br>Exercise 15</button>
 		<button onclick="loadModel('../../Module_3/Exercise_1')">Module 3<br>Exercise 1</button>
 		<button onclick="loadModel('../../Module_3/Exercise_2')">Module 3<br>Exercise 2</button>
 		<button onclick="loadModel('../../Module_5/Exercise_1')">Module 5<br>Exercise 1</button>
@@ -19,11 +25,15 @@
 		<iframe id="iframe" src=""></iframe>
 		<script>
 			var url = window.location.href;
+			//console.log(url.split("?url=")[1])
 			var mobaurl = decodeURIComponent(url.split("?url=")[1]);
-			mobaurl = mobaurl + "vnc.html?password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true";
+			//mobaurl = mobaurl + "vnc.html?password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true";
 
 			function loadModel(str){
-				document.getElementById("iframe").src=mobaurl+"&model="+encodeURIComponent(str); 
+				//console.log("Encodedstring: "+encodeURIComponent(str))
+				document.getElementById("iframe").src=mobaurl+"?modelpath="+encodeURIComponent(str); 
+				console.log("LOOOK AT THISSS")
+				console.log(mobaurl+"&modelpath="+encodeURIComponent(str))
 				//console.log(mobaurl+"&model="+encodeURIComponent(str))
 			}
 		</script>
