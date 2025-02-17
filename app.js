@@ -106,13 +106,12 @@ http.listen(process.env.PORT, function(){
 		})*/
 
 		/*var codes = [];
-		for(var i=31;i<60;i++){
+		for(var i=0;i<80;i++){
 			var json = {};
 			json.code = generateId(16);
-			json.type = 2;
-			json.customer = "Technicom"
+			json.type = 3;
+			json.customer = "Litop"
 			json.date = getDateAsStringForInputObject(new Date());
-			json.url = "https://technicomopc"+eval(i+1)+".modeller.cloud:3000/vnc.html?password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true"
 			codes.push(json);
 		}
 
@@ -215,7 +214,44 @@ server.get('/teacher',async (req,res)=>{
 	});
 });
 
-/*axios.post('https://student.instances.modeller.cloud/start', new URLSearchParams({uuid: "IKWUXLSBHBRNNYYF"}))
+//NURMZGMJELCREZAF, WZQEKWOMLFUFGDVC
+
+/*axios.post('https://student.instances.modeller.cloud/start', new URLSearchParams({uuid: "ABCDABCDABCDABC1"}))
+.then((dockerResponse)=>{
+	//console.log(response);
+	//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
+	//console.log("Redirected to: "+users[0].url+"&modelpath="+req.query.modelpath);
+	console.log(dockerResponse)
+})
+.catch((error)=>{
+	console.log(error);	
+})
+*/
+/*axios.post('https://student.instances.modeller.cloud/start', new URLSearchParams({uuid: "NURMZGMJELCREZAF"}))
+.then((dockerResponse)=>{
+	//console.log(response);
+	//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
+	//console.log("Redirected to: "+users[0].url+"&modelpath="+req.query.modelpath);
+	console.log(dockerResponse)
+})
+.catch((error)=>{
+	console.log(error);	
+})*/
+
+//https://student.instances.modeller.cloud/connect/ABCDABCDABCDABC1/vnc.html?path=connect/ABCDABCDABCDABC1/websocketify&password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true&reconnect=true
+
+/*axios.post('https://student.instances.modeller.cloud/stop', new URLSearchParams({uuid: "NURMZGMJELCREZAF"}))
+.then((dockerResponse)=>{
+	//console.log(response);
+	//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
+	//console.log("Redirected to: "+users[0].url+"&modelpath="+req.query.modelpath);
+	console.log(dockerResponse)
+})
+.catch((error)=>{
+	console.log(error);	
+})
+
+axios.post('https://student.instances.modeller.cloud/stop', new URLSearchParams({uuid: "ABCDABCDABCDABC1"}))
 .then((dockerResponse)=>{
 	//console.log(response);
 	//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
@@ -298,6 +334,18 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 			message: "There was a database error. Please try refrehing the page. If the problem persists e-mail us on <a href=\"mailto:info@mobatec.nl\">info@mobatec.nl</a>",
 			bucket: bucket
 		})
+	})
+});
+
+server.get('/lmsView/:hostname/:lmsid/:exercisestring',async (req,res)=>{
+	var hostname = decodeURIComponent(req.params.hostname);
+	var lmsid = decodeURIComponent(req.params.lmsid);
+	var exercise = decodeURIComponent(req.params.exercisestring);
+	res.render("lmsView",{
+		hostname: hostname,
+		lmsid: lmsid,
+		exercise: exercise,
+		bucket: bucket
 	})
 });
 
