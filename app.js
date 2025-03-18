@@ -51,7 +51,7 @@ function generateId(length) {
 	var result           = [];
 	var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	var charactersLength = characters.length;
-	for ( var i = 0; i < length; i++ ) {
+	for (var i = 0; i < length; i++ ) {
 		result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
 	}
 	return result.join('');
@@ -76,6 +76,19 @@ http.listen(process.env.PORT, function(){
 		usersDB		=	client.db("MobaHub").collection('Modeller Cloud');
 		lmsActivationCodesDB		=	client.db("MobaCloud").collection('LMSActivationCodes');
 		lmsUsersDB				=	client.db("MobaCloud").collection('LMSUsers');
+
+		lmsUsersDB.find({}).toArray()
+		.then((users)=>{
+			/*console.log(users)
+			var counter = 0;
+			var counter2 = 0;
+			for(var i=0;i<users.length;i++){
+				if(users[i].type==1){counter++;}
+				if(users[i].type==2){counter2++;}
+			}
+			console.log("1: " + counter)
+			console.log("2: " + counter2)*/
+		})
 
 		/*lmsUsersDB.find({}).toArray()
 		.then((users)=>{
