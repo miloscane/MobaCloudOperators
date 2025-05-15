@@ -71,7 +71,7 @@ http.listen(process.env.PORT, function(){
 	console.log("Server Started");
 	var dbConnectionStart	=	new Date().getTime();
 	client.connect()
-	.then(() => {
+	.then(async () => {
 		console.log("Connected to database in " + eval(new Date().getTime()/1000-dbConnectionStart/1000).toFixed(2)+"s")
 		usersDB		=	client.db("MobaHub").collection('Modeller Cloud');
 		lmsActivationCodesDB		=	client.db("MobaCloud").collection('LMSActivationCodes');
@@ -147,6 +147,21 @@ http.listen(process.env.PORT, function(){
 		.catch((error)=>{
 			console.log(error)
 		})*/
+
+			/*(var lmsUsers = await lmsUsersDB.find({}).toArray();
+			for(var i=0;i<lmsUsers.length;i++){
+				try{
+					var response = await axios.post('https://student.instances.modeller.cloud/stop', new URLSearchParams({uuid: lmsUsers[i].code}));
+					console.log(response.data);
+					console.log("#########################################################################################################")
+				}catch(err){
+					console.log(err.status)
+				}
+				
+			}*/
+	
+		
+
 	})
 	.catch((error)=>{
 		console.log(error);
@@ -227,6 +242,17 @@ server.get('/teacher',async (req,res)=>{
 	});
 });
 
+/*axios.post('https://worley.instances.modeller.cloud/stop', new URLSearchParams({uuid: "QNCLYWUEKJEVXTSA"}))
+.then((dockerResponse)=>{
+	//console.log(response);
+	//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
+	//console.log("Redirected to: "+users[0].url+"&modelpath="+req.query.modelpath);
+	console.log(dockerResponse)
+})
+.catch((error)=>{
+	console.log(error);	
+})*/
+
 //NURMZGMJELCREZAF, WZQEKWOMLFUFGDVC
 
 /*axios.post('https://student.instances.modeller.cloud/start', new URLSearchParams({uuid: "ABCDABCDABCDABC1"}))
@@ -253,7 +279,7 @@ server.get('/teacher',async (req,res)=>{
 
 //https://student.instances.modeller.cloud/connect/ABCDABCDABCDABC1/vnc.html?path=connect/ABCDABCDABCDABC1/websocketify&password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true&reconnect=true
 
-/*axios.post('https://student.instances.modeller.cloud/stop', new URLSearchParams({uuid: "NURMZGMJELCREZAF"}))
+/*axios.post('https://student.instances.modeller.cloud/stop', new URLSearchParams({uuid: "abcdabcdabcdacbd"}))
 .then((dockerResponse)=>{
 	//console.log(response);
 	//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
@@ -262,9 +288,9 @@ server.get('/teacher',async (req,res)=>{
 })
 .catch((error)=>{
 	console.log(error);	
-})
+})*/
 
-axios.post('https://student.instances.modeller.cloud/stop', new URLSearchParams({uuid: "ABCDABCDABCDABC1"}))
+/*axios.post('https://student.instances.modeller.cloud/stop', new URLSearchParams({uuid: "ABCDABCDABCDABC1"}))
 .then((dockerResponse)=>{
 	//console.log(response);
 	//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
