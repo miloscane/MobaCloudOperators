@@ -42,10 +42,7 @@ setInterval(function(){
 		if(lmsAPI.hasOwnProperty("API")){
 			lmsAPI.API.LMSInitialize("");
 			if(lmsAPI.API.hasOwnProperty("LMSGetValue")){
-				console.log("LMS")
-				console.log(lmsAPI)
-				console.log("LMS API")
-				console.log(lmsAPI.API)
+				
 				if(lmsAPI.API.LMSGetValue("cmi.core.student_name")!=""){
 					//setTimeout(function(){
 						//
@@ -69,6 +66,10 @@ setInterval(function(){
 				}
 			}else{
 				console.log("Couldnt find function LMSGetValue, no clue which API this LMS uses.");
+				console.log("LMS")
+				console.log(lmsAPI)
+				console.log("LMS API")
+				console.log(lmsAPI.API)
 			}
 		}else{
 			console.log("No API found")
