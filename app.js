@@ -242,7 +242,7 @@ server.get('/teacher',async (req,res)=>{
 	});
 });
 
-/*axios.post('https://worley.instances.modeller.cloud/stop', new URLSearchParams({uuid: "QNCLYWUEKJEVXTSA"}))
+axios.post('https://worley.instances.modeller.cloud/start', new URLSearchParams({uuid: "cKhSJsPucTslTQalWxjY"}))
 .then((dockerResponse)=>{
 	//console.log(response);
 	//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
@@ -251,7 +251,7 @@ server.get('/teacher',async (req,res)=>{
 })
 .catch((error)=>{
 	console.log(error);	
-})*/
+})
 
 //NURMZGMJELCREZAF, WZQEKWOMLFUFGDVC
 
@@ -279,7 +279,7 @@ server.get('/teacher',async (req,res)=>{
 
 //https://student.instances.modeller.cloud/connect/ABCDABCDABCDABC1/vnc.html?path=connect/ABCDABCDABCDABC1/websocketify&password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true&reconnect=true
 
-/*axios.post('https://student.instances.modeller.cloud/stop', new URLSearchParams({uuid: "abcdabcdabcdacbd"}))
+axios.post('https://student.instances.modeller.cloud/stop', new URLSearchParams({uuid: "KJPPXYUTBVGMKQDO"}))
 .then((dockerResponse)=>{
 	//console.log(response);
 	//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
@@ -288,7 +288,7 @@ server.get('/teacher',async (req,res)=>{
 })
 .catch((error)=>{
 	console.log(error);	
-})*/
+})
 
 /*axios.post('https://student.instances.modeller.cloud/stop', new URLSearchParams({uuid: "ABCDABCDABCDABC1"}))
 .then((dockerResponse)=>{
