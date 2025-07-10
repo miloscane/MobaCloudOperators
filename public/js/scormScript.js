@@ -67,9 +67,9 @@ setInterval(function(){
 			}else{
 				console.log("Couldnt find function LMSGetValue, no clue which API this LMS uses.");
 				console.log("LMS API")
-				console.log(lmsAPI.API.ICODEON_4JS_APIAdapter)
+				console.log(lmsAPI.API.api)
 				console.log("---");
-				console.log(lmsAPI.API.ICODEON_4JS_APIAdapter.str_CurrentGetName("cmi.suspend_data"))
+				console.log(lmsAPI.API.api.learnerId)
 			}
 		}else{
 			console.log("No API found")
