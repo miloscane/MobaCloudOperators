@@ -70,6 +70,13 @@ setInterval(function(){
 				console.log(lmsAPI.API.api)
 				console.log("---");
 				console.log(lmsAPI.API.api.learnerId)
+				console.log("Student ID:");
+				var studentId = lmsAPI.API.api.learnerId;
+				//console.log(studentId);
+				//console.log("--------------");
+				//console.log("Hostname:");
+				//console.log(location.hostname);
+				generateMobaCloudIframe(studentId,location.hostname);
 			}
 		}else{
 			console.log("No API found")
