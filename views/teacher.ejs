@@ -1,5 +1,5 @@
 <%- include ("partials/header") -%>
-<div class="teacher">
+<div class="teacher"> 
 	<div id="header">
 		<button onclick="loadModel('../../Module_2/Exercise_1')">Module 2<br>Exercise 1</button>
 		<button onclick="loadModel('../../Module_2/Exercise_2')">Module 2<br>Exercise 2</button>
@@ -31,7 +31,7 @@
 
 			function loadModel(str){
 				//console.log("Encodedstring: "+encodeURIComponent(str))
-				document.getElementById("iframe").src=mobaurl+"?modelpath="+encodeURIComponent(str); 
+				document.getElementById("iframe").src="https://"+mobaurl+"&modelpath="+encodeURIComponent(str); 
 				console.log("LOOOK AT THISSS")
 				console.log(mobaurl+"&modelpath="+encodeURIComponent(str))
 				//console.log(mobaurl+"&model="+encodeURIComponent(str))
