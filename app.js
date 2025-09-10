@@ -66,106 +66,20 @@ function getDateAsStringForInputObject(date){
 	return	yearString+"-"+monthString+"-"+dayString;
 }
 
-http.listen(process.env.PORT, function(){
+http.listen(process.env.PORT, async function(){
 	console.log("MobaCloud Operators");
 	console.log("Server Started");
 	var dbConnectionStart	=	new Date().getTime();
-	client.connect()
-	.then(async () => {
+	try{
+		await client.connect();
 		console.log("Connected to database in " + eval(new Date().getTime()/1000-dbConnectionStart/1000).toFixed(2)+"s")
 		usersDB		=	client.db("MobaHub").collection('Modeller Cloud');
 		lmsActivationCodesDB		=	client.db("MobaCloud").collection('LMSActivationCodes');
 		lmsUsersDB				=	client.db("MobaCloud").collection('LMSUsers');
-
-		lmsUsersDB.find({}).toArray()
-		.then((users)=>{
-			/*console.log(users)
-			var counter = 0;
-			var counter2 = 0;
-			for(var i=0;i<users.length;i++){
-				if(users[i].type==1){counter++;}
-				if(users[i].type==2){counter2++;}
-			}
-			console.log("1: " + counter)
-			console.log("2: " + counter2)*/
-		})
-
-		/*lmsUsersDB.find({}).toArray()
-		.then((users)=>{
-			users.sort((a, b) => {
-				if (a.url < b.url) return -1;
-				if (a.url > b.url) return 1;
-				return 0;
-			});
-			for(var i=0;i<users.length;i++){
-				console.log(users[i].url.split(".modeller")[0])
-				console.log("-------")
-			}
-		})
-		.catch((error)=>{
-			console.log(error)
-		})*/
-
-		/*lmsUsersDB.find({}).toArray()
-		.then((users)=>{
-			var csvString = "LMS,Username,Customer,Activation Date,Code\r\n";
-			for(var i=0;i<users.length;i++){
-				csvString += users[i].hostname + ","+users[i].lmsid + ",Technicom,2024-09-11," +  users[i].code + "\r\n"
-			}
-			fs.writeFileSync("./Users.csv",csvString,"utf8");	
-		})
-		.catch((error)=>{
-			console.log(error)
-		})*/
-
-		/*var codes = [];
-		for(var i=0;i<80;i++){
-			var json = {};
-			json.code = generateId(16);
-			json.type = 3;
-			json.customer = "Litop"
-			json.date = getDateAsStringForInputObject(new Date());
-			codes.push(json);
-		}
-
-		lmsActivationCodesDB.insertMany(codes)
-		.then((dbR)=>{
-			console.log(dbR)
-			console.log("------------")
-			for(var i=0;i<codes.length;i++){
-				console.log(codes[i].code.substr(0, 4)+"-"+codes[i].code.substr(4, 4)+"-"+codes[i].code.substr(8, 4)+"-"+codes[i].code.substr(12, 4))
-			}
-		})
-		.catch((error)=>{
-			console.log(error)
-		})*/
-
-		/*lmsActivationCodesDB.deleteMany({date:"2024-09-12"})
-		.then((dbResponse)=>{
-			console.log(dbResponse)
-		})
-		.catch((error)=>{
-			console.log(error)
-		})*/
-
-			/*(var lmsUsers = await lmsUsersDB.find({}).toArray();
-			for(var i=0;i<lmsUsers.length;i++){
-				try{
-					var response = await axios.post('https://student.instances.modeller.cloud/stop', new URLSearchParams({uuid: lmsUsers[i].code}));
-					console.log(response.data);
-					console.log("#########################################################################################################")
-				}catch(err){
-					console.log(err.status)
-				}
-				
-			}*/
-	
+	}catch(err){
+		console.log(err)
+	}
 		
-
-	})
-	.catch((error)=>{
-		console.log(error);
-	})
 });
 
 server.get('/login',async (req,res)=>{
@@ -175,7 +89,7 @@ server.get('/login',async (req,res)=>{
 	}else{
 		if(req.query.url){
 			res.render("login",{
-				url: decodeURIComponent(req.query.url),
+				//url: decodeURIComponent(req.query.url),
 				bucket: bucket
 			});
 		}else{
@@ -187,35 +101,164 @@ server.get('/login',async (req,res)=>{
 	}
 });
 
+/*server.post('/login',async (req,res)=>{
+	if(req.session.user){
+		req.session.destroy(function(){});
+	}
+	const username = req.body.username;
+	const password = hashString(req.body.password);
+
+	usersDB.find({username:username}).toArray()
+	.then((users) => {
+		if(users.length>0){
+			if(users[0].password==password){
+				var sessionObject	=	JSON.parse(JSON.stringify(users[0]));
+				delete sessionObject.password;
+				req.session.user	=	sessionObject;
+				res.redirect(users[0].url);
+				
+			}else{
+				res.send("Wrong password");
+			}
+		}else{
+			res.send("No such user");
+		}
+	})
+	.catch(error => {
+		console.log(error)
+		res.send("login error");
+	})
+});*/
+
 server.post('/login',async (req,res)=>{
 	if(req.session.user){
-		res.redirect("/")
-	}else{
-		const username = req.body.username;
-		const password = hashString(req.body.password);
-		usersDB.find({username:username}).toArray()
-		.then((users) => {
-			if(users.length>0){
-				if(users[0].password==password){
-					var sessionObject	=	JSON.parse(JSON.stringify(users[0]));
-					delete sessionObject.password;
-					req.session.user	=	sessionObject;
-					res.redirect(users[0].url);
-					
-				}else{
-					res.send("Wrong password");
-				}
-			}else{
-				res.send("No such user");
-			}
-		})
-		.catch(error => {
-			console.log(error)
-			res.send("login error");
-		})
+		req.session.destroy(function(){});
+	}
+	try{
+		var users = await lmsUsersDB.find({email:req.body.username.toLowerCase()}).toArray();
+		if(users.length==0){
+			return res.render("message",{
+				bucket: bucket,
+				message: "No such user, try to login again <a href='/login'>here</a>."
+			})
+		}
+
+		if(users[0].password!=hashString(req.body.password)){
+			return res.render("message",{
+				bucket: bucket,
+				message: "Wrong password, try to login again <a href='/login'>here</a>."
+			})
+		}
+		var sessionObject	=	JSON.parse(JSON.stringify(users[0]));
+		delete sessionObject.password;
+		req.session.user	=	sessionObject;
+		res.redirect("/teacherAccess");
+
+	}catch(err){
+		console.log(err);
+		res.send("Database error 151");
 	}
 });
 
+server.post('/loginCode',async (req,res)=>{
+	if(!req.body.code){
+		return res.send("no code")
+	}
+	try{
+		var users = await lmsUsersDB.find({code:req.body.code.split("-").join("")}).toArray();
+		if(users.length==0){
+			return res.render("message",{
+				bucket: bucket,
+				message: "The provided code was never activated on an LMS system. Please activate the code on a LMS first and try to login again <a href='/login'>here</a>."
+			})
+		}
+		if(!users[0].email){
+			return res.render("accountCreation",{
+				bucket: bucket,
+				code: users[0].code
+			});
+		}
+
+		return res.render("message",{
+			bucket: bucket,
+			message: "An account was already created with this code, please use your username and passowrd to login <a href='/login'>here</a>."
+		})
+
+	}catch(err){
+		console.log(err);
+		res.send("Database error 141")
+	}
+});
+
+function isEmail(str) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(str);
+}
+function isStrongPassword(password) {
+    // Minimum 8 characters, at least one uppercase, one lowercase, one number, and one special character
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+}
+
+server.post('/accountCreation',async (req,res)=>{
+	if(!req.body.json){
+		return 
+	}
+	try{
+
+		var json = JSON.parse(req.body.json);
+
+		console.log(json)
+		var users = await lmsUsersDB.find({code:json.code}).toArray();
+		if(users.length==0){
+			return res.render("message",{
+				bucket: bucket,
+				message: "The provided code was never activated on an LMS system. Please activate the code on a LMS first and try to login again."
+			})
+		}
+		if(users[0].email){
+			return res.render("message",{
+				bucket: bucket,
+				message: "An account was already created with this code, please use your username and passowrd to login <a href='/login'>here</a>."
+			})
+		}
+		if(!isEmail(json.username)){
+			return res.render("message",{
+				bucket: bucket,
+				message: "Username doesnt appear to be a valid email address, please try creating an account <a href='/login'>again</a>."
+			})
+		}
+		if(!isStrongPassword(json.password)){
+			return res.render("message",{
+				bucket: bucket,
+				message: "Password is not strong enough. please try creating an account <a href='/login'>again</a>."
+			})
+		}
+		if(json.password!=json.password2){
+			return res.render("message",{
+				bucket: bucket,
+				message: "Passwords dont match. please try creating an account <a href='/login'>again</a>."
+			})
+		}
+
+		var setObj = {
+			$set:{
+				email: json.username.toLowerCase(),
+				password: hashString(json.password)
+			}
+		}
+
+		await lmsUsersDB.updateOne({code:json.code},setObj)
+		res.render("message",{
+			bucket: bucket,
+			message: "You have successfully created an account, please login <a href='/login'>here</a>."
+		})
+
+	}catch(err){
+		console.log(err);
+		res.send("Database error 198")
+	}
+});
 
 server.get('/modeller/:url',async (req,res)=>{
 	res.render("home",{
@@ -238,6 +281,18 @@ server.get('/tata1',async (req,res)=>{
 
 server.get('/teacher',async (req,res)=>{
 	res.render("teacher",{
+		bucket: bucket
+	});
+});
+
+server.get('/teacherAccess',async (req,res)=>{
+	if(!req.session.user){
+		return res.redirect("/login")
+	}
+	res.render("teacherAccess",{
+		user: req.session.user,
+		lmsId: req.session.user.lmsid,
+		lmsHost: req.session.user.hostname,
 		bucket: bucket
 	});
 });
@@ -447,14 +502,11 @@ server.post('/lmsLogin',async (req,res)=>{
 
 
 
-function hashString(string){
-	if (typeof string === 'string'){
-		var hash	=	crypto.createHash('md5').update(string).digest('hex')
-	}else{
-		var hash    = "?"
-	}
-	
-	return hash
+function hashString(string) {
+    if (typeof string !== 'string') {
+        throw new Error('Input must be a string');
+    }
+    return crypto.createHash('sha256').update(string).digest('hex');
 }
 
 var scenarios = [

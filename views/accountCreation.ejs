@@ -60,8 +60,8 @@
                     <div class="right"></div>
                 </div>
                 <div class="form"  style="padding-bottom:20px;">
-                    <div class="title">Enter your credentials to log into MobaCloud:</div>
-                    <form method="POST" action="/login" id="form" style="padding-top:20px;">
+                    <div class="title">The provided code was properly activated. Please fill out the username and password you will use to log into the system:</div>
+                    <form method="POST" action="/accountCreation" id="form" style="padding-top:20px;">
                         <div class="inputsWrap">
                             <div class="inputWrap">
                                 <input type="text" placeholder="Username" name="username" id="username">
@@ -69,25 +69,55 @@
                             <div class="inputWrap">
                                 <input type="password" placeholder="Password" name="password" id="password">
                             </div>
+                            <div class="inputWrap">
+                                <input type="password" placeholder="Password again" name="password" id="password2">
+                            </div>
+                            <input type="text" id="json" style="display:none" name="json">
                         </div>
                         
 
                     </form>
                     <div style="text-align:center;margin-top:20px">
-                        <div class="submitButton" onclick="document.getElementById('form').submit()">Log In</div>
+                        <div class="submitButton" onclick="submitForm()">Create account</div>
                     </div>
-                    <div style="font-size:22px;margin:10px auto;text-align:center">or input your activation code to create an account</div>
-                    <div class="inputsWrap">
-                        <div class="inputWrap">
-                            <form method="POST" action="/loginCode" id="form2">
-                                <input type="text" placeholder="XXXX-XXXX-XXXX-XXXX" name="code" style="text-align:center;">
-                            </form>
-                        </div>    
-                    </div>
-                    
-                    <div style="text-align:center;margin-top:20px">
-                        <div class="submitButton" onclick="document.getElementById('form2').submit()">Activate</div>
-                    </div>
+                    <script>
+                        function isEmail(str) {
+                            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                            return regex.test(str);
+                        }
+                        function isStrongPassword(password) {
+                            // Minimum 8 characters, at least one uppercase, one lowercase, one number, and one special character
+                            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                            return regex.test(password);
+                        }
+                        function submitForm(){
+                            var username = document.getElementById("username").value;
+                            var password = document.getElementById("password").value;
+                            var password2 = document.getElementById("password2").value;
+                            if(!isEmail(username)){
+                                alert("Username must be a vaild email address");
+                                return;
+                            }
+
+                            if(password!=password2){
+                                alert("Passwords dont match.");
+                                return;
+                            }
+
+                            if(!isStrongPassword(password)){
+                                alert("Your password is not strong enough. Minimum 8 characters, at least one uppercase, one lowercase, one number, and one special character");
+                                return;
+                            }
+
+                            var json = {};
+                            json.code = "<%=code%>";
+                            json.username = username;
+                            json.password = password;
+                            json.password2 = password2;
+                            document.getElementById("json").value = JSON.stringify(json);
+                            document.getElementById("form").submit();
+                        }
+                    </script>
                 </div>
             </div>
         </div>

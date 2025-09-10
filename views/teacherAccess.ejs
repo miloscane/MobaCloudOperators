@@ -1,4 +1,8 @@
 <%- include ("partials/header") -%>
+<script>
+	var lmsHost = "<%=lmsHost%>";
+	var lmsId = "<%=lmsId%>";
+</script>
 <div class="teacher"> 
 	<div id="header">
 		<button onclick="loadModel('../../Module_2/Exercise_1')">Module 2<br>Exercise 1</button>
@@ -25,17 +29,8 @@
 	<div style="position:relative;overflow:hidden;width:100vw;height:100vh;background-color:rgb(37,78,118);background-image:url('https://mobatec.azurewebsites.net/images/edu-lic.jpeg');background-size:cover;background-position:right center;" id="site-frame">
 		<iframe id="iframe" src=""></iframe>
 		<script>
-			var url = window.location.href;
-			//console.log(url.split("?url=")[1])
-			var mobaurl = decodeURIComponent(url.split("?url=")[1]);
-			//mobaurl = mobaurl + "vnc.html?password=7b0ce21a0d8d3c7adec51d48abe2a3e9&autoconnect=true";
-
 			function loadModel(str){
-				//console.log("Encodedstring: "+encodeURIComponent(str))
-				document.getElementById("iframe").src="https://"+mobaurl+"?modelpath="+encodeURIComponent(str); 
-				console.log("LOOOK AT THISSS")
-				console.log(mobaurl+"&modelpath="+encodeURIComponent(str))
-				//console.log(mobaurl+"&model="+encodeURIComponent(str))
+				document.getElementById("iframe").src="/lmsLogin/"+lmsHost+"/"+lmsId+"?modelpath="+encodeURIComponent(str); 
 			}
 		</script>
 	</div>
