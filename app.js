@@ -363,6 +363,20 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 	lmsUsersDB.find({hostname:hostname,lmsid:lmsid}).toArray()
 	.then((users)=>{
 		if(users.length>0){
+			var licenseStart = 1730110407287;
+			var oneYear = 365 * 24 * 60 * 60 * 1000;
+			if(users[users.length-1].datetime){
+				licenseStart = users[users.length-1].datetime;
+			}
+			if(new Date().getTime() - licenseStart>=oneYear){
+				return res.render("lmsLogin",{
+					message: "Your license has expired. Please input your new activation code",
+					hostname: decodeURIComponent(req.params.hostname),
+					lmsid: decodeURIComponent(req.params.lmsid),
+					modelpath: req.query.modelpath,
+					bucket: bucket
+				})
+			}
 			//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
 			axios.post('https://student.instances.modeller.cloud/start', new URLSearchParams({uuid: users[0].code}))
 			.then((dockerResponse)=>{
