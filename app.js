@@ -76,6 +76,38 @@ http.listen(process.env.PORT, async function(){
 		usersDB		=	client.db("MobaHub").collection('Modeller Cloud');
 		lmsActivationCodesDB		=	client.db("MobaCloud").collection('LMSActivationCodes');
 		lmsUsersDB				=	client.db("MobaCloud").collection('LMSUsers');
+
+		/*var lmsUsers = await lmsUsersDB.find({}).toArray();
+		console.log(lmsUsers.length)
+		var cutOff = new Date("2025-08-25").getTime();
+		var newUsers = [];
+		for(var i=0;i<lmsUsers.length;i++){
+			if(lmsUsers[i].datetime>cutOff){
+				newUsers.push(lmsUsers[i]);
+			}
+		}
+		console.log("Cut off date 2025-08-25" )
+		console.log("Codes activated: "+newUsers.length)
+		for(var i=0;i<newUsers.length;i++){
+			newUsers[i].found = false;
+			for(var j=0;j<lmsUsers.length;j++){
+				if(lmsUsers[j].lmsid==newUsers[i].lmsid && lmsUsers[j].datetime<cutOff){
+					newUsers[i].found = true;
+					break;
+				}
+			}
+		}
+		var previouslyActivated = 0;
+		var newlyActivated = 0;
+		for(var i=0;i<newUsers.length;i++){
+			if(newUsers[i].found==true){
+				previouslyActivated++;
+			}else{
+				newlyActivated++;
+			}
+		}
+		console.log("New users:"+newlyActivated)
+		console.log("Previous users:"+previouslyActivated)*/
 	}catch(err){
 		console.log(err)
 	}
@@ -378,7 +410,10 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 				})
 			}
 			//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
-			axios.post('https://student.instances.modeller.cloud/start', new URLSearchParams({uuid: users[0].code}))
+			return res.render("reload-container",{
+				bucket: bucket
+			})
+			/*axios.post('https://student.instances.modeller.cloud/start', new URLSearchParams({uuid: users[0].code}))
 			.then((dockerResponse)=>{
 				//console.log(response);
 				//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
@@ -425,7 +460,7 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 					})
 				}
 				
-			})
+			})*/
 			
 		}else{
 			res.render("lmsLogin",{
