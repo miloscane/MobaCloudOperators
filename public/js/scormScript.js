@@ -108,17 +108,14 @@ setInterval(function(){
 },1000);
 
 //SCALING THE IFRAME
-var scaleFactor = 1;
+/*var scaleFactor = 1;
 setInterval(function(){
 	if(document.getElementById("mobacloud-wrap")){
 		var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 		var iframe = document.getElementById("mobacloud");
 		var iframeBox = iframe.getBoundingClientRect();
 		var siteFrame = document.getElementById("mobacloud-wrap").getBoundingClientRect();
-		/*console.log("Site frame: "+siteFrame.width)
-		console.log("Simulator: "+iframeBox.width);
-		console.log("Scale factor: "+scaleFactor);
-		console.log("-----------------------------------")*/
+		
 		var heightFits = false;
 		var widthFits = false;
 		if(iframeBox.width<siteFrame.width || iframeBox.width<siteFrame.width-siteFrame.width*0.01){
@@ -156,7 +153,7 @@ setInterval(function(){
 			}
 		}	
 	}
-},20)
+},20)*/
 
 
 
