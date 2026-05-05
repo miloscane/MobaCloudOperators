@@ -727,7 +727,22 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 				})
 			}
 
-			res.redirect("https://"+activeSimulators[0].name+".modeller.cloud/"+req.query.exercisename+"/screen/DCS");
+			var targetUrl = "https://"+activeSimulators[0].name+".modeller.cloud/"+req.query.exercisename+"/screen/DCS";
+
+			const response = await axios.get(targetUrl, {
+		      timeout: 5000,
+		      validateStatus: () => true // prevents axios from throwing on 404/500
+		    });
+
+		    if (response.status === 200) {
+		      return res.redirect(targetUrl);
+		    }
+
+		    res.render("reload-container",{
+				bucket: bucket
+			})
+
+			//res.redirect("https://"+activeSimulators[0].name+".modeller.cloud/"+req.query.exercisename+"/screen/DCS");
 			
 			/*axios.post('https://student.instances.modeller.cloud/start', new URLSearchParams({uuid: users[0].code}))
 			.then((dockerResponse)=>{
