@@ -102,7 +102,7 @@ setInterval(function(){
 			var exerciseName = "M"+modelStringArray[1][modelStringArray[1].length-1]+"E"+modelStringArray[2][modelStringArray[2].length-1];
 
 
-			elems[i].setAttribute("onclick","console.log('Sent message to parent');parent.postMessage('LaunchSimulation$https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(document.getElementById('mobacloud').dataset.hostname)+"/"+encodeURIComponent(document.getElementById('mobacloud').dataset.id)+"?exercisename="+encodeURIComponent(modelString)+"')");
+			elems[i].setAttribute("onclick","console.log('Sent message to parent');parent.postMessage('LaunchSimulation$https://operators.modeller.cloud/lmsLogin/"+encodeURIComponent(document.getElementById('mobacloud').dataset.hostname)+"/"+encodeURIComponent(document.getElementById('mobacloud').dataset.id)+"?exercisename="+encodeURIComponent(exerciseName)+"')");
 		}
 	}	
 },1000);
