@@ -729,7 +729,7 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 
 			var targetUrl = "https://"+activeSimulators[0].name+".modeller.cloud/"+req.query.exercisename+"/screen/DCS";
 
-			const response = await axios.get(targetUrl, {
+			var response = await axios.get(targetUrl, {
 		      timeout: 5000,
 		      validateStatus: () => true // prevents axios from throwing on 404/500
 		    });
