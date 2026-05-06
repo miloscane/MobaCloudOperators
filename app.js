@@ -729,18 +729,26 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 
 			var targetUrl = "https://"+activeSimulators[0].name+".modeller.cloud/"+req.query.exercisename+"/screen/DCS";
 
-			var response = await axios.get(targetUrl, {
-		      timeout: 5000,
-		      validateStatus: () => true // prevents axios from throwing on 404/500
-		    });
+			try{
+				var response = await axios.get(targetUrl, {
+			      timeout: 5000,
+			      validateStatus: () => true // prevents axios from throwing on 404/500
+			    });
 
-		    if (response.status === 200) {
-		      return res.redirect(targetUrl);
-		    }
+			    if (response.status === 200) {
+			      return res.redirect(targetUrl);
+			    }
+			    res.render("reload-container",{
+					bucket: bucket
+				})
+			}catch(err2){
+				res.render("reload-container",{
+					bucket: bucket
+				})
+			}
+			
  
-		    res.render("reload-container",{
-				bucket: bucket
-			})
+		    
 
 			//res.redirect("https://"+activeSimulators[0].name+".modeller.cloud/"+req.query.exercisename+"/screen/DCS");
 			
