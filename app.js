@@ -630,7 +630,7 @@ setInterval(async () => {
 									status:4
 								}
 							}
-							await activeSimulatorsDB.updateOne({id:simulator.id},setObj);
+							await activeSimulatorsDB.updateOne({name:simulator.name},setObj);
 						}
 					}
 					
