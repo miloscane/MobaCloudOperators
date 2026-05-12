@@ -105,7 +105,7 @@ async function getSnapshots(){
 		}
 
 		var response = await axios(config);
-		//console.log(response.data.snapshots)
+		console.log(response.data.snapshots)
 		return response.data.snapshots;
 	}catch(err){
 		console.log(err)
@@ -411,8 +411,6 @@ server.post('/accountCreation',async (req,res)=>{
 	try{
 
 		var json = JSON.parse(req.body.json);
-
-		console.log(json)
 		var users = await lmsUsersDB.find({code:json.code}).toArray();
 		if(users.length==0){
 			return res.render("message",{
@@ -717,13 +715,15 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 				await activeSimulatorsDB.insertOne(simulatorJson)
 
 				return res.render("reload-container",{
-					bucket: bucket
+					bucket: bucket,
+					exercise: req.query.exercisename
 				})
 			}
 
 			if(activeSimulators[0].status!=4){
 				return res.render("reload-container",{
-					bucket: bucket
+					bucket: bucket,
+					exercise: req.query.exercisename
 				})
 			}
 
@@ -740,10 +740,12 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 			    }
 			    res.render("reload-container",{
 					bucket: bucket
+					exercise: req.query.exercisename
 				})
 			}catch(err2){
 				res.render("reload-container",{
 					bucket: bucket
+					exercise: req.query.exercisename
 				})
 			}
 			
