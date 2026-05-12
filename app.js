@@ -739,12 +739,12 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 			      return res.redirect(targetUrl);
 			    }
 			    res.render("reload-container",{
-					bucket: bucket
+					bucket: bucket,
 					exercise: req.query.exercisename
 				})
 			}catch(err2){
 				res.render("reload-container",{
-					bucket: bucket
+					bucket: bucket,
 					exercise: req.query.exercisename
 				})
 			}
