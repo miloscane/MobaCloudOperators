@@ -5,32 +5,32 @@
 </script>
 <div class="teacher"> 
 	<div id="header">
-		<button onclick="loadModel('../../Module_2/Exercise_1')">Module 2<br>Exercise 1</button>
-		<button onclick="loadModel('../../Module_2/Exercise_2')">Module 2<br>Exercise 2</button>
-		<button onclick="loadModel('../../Module_2/Exercise_3')">Module 2<br>Exercise 3</button>
-		<button onclick="loadModel('../../Module_2/Exercise_4')">Module 2<br>Exercise 4</button>
-		<button onclick="loadModel('../../Module_2/Exercise_5')">Module 2<br>Exercise 5</button>
-		<button onclick="loadModel('../../Module_2/Exercise_6')">Module 2<br>Exercise 6</button>
-		<button onclick="loadModel('../../Module_2/Exercise_7')">Module 2<br>Exercise 7</button>
-		<button onclick="loadModel('../../Module_2/Exercise_8')">Module 2<br>Exercise 8</button>
-		<button onclick="loadModel('../../Module_2/Exercise_9')">Module 2<br>Exercise 9</button>
-		<button onclick="loadModel('../../Module_2/Exercise_10')">Module 2<br>Exercise 10</button>
-		<button onclick="loadModel('../../Module_2/Exercise_11')">Module 2<br>Exercise 11</button>
-		<button onclick="loadModel('../../Module_2/Exercise_12')">Module 2<br>Exercise 12</button>
-		<button onclick="loadModel('../../Module_2/Exercise_13')">Module 2<br>Exercise 13</button>
-		<button onclick="loadModel('../../Module_2/Exercise_14')">Module 2<br>Exercise 14</button>
-		<button onclick="loadModel('../../Module_2/Exercise_15')">Module 2<br>Exercise 15</button>
-		<button onclick="loadModel('../../Module_3/Exercise_1')">Module 3<br>Exercise 1</button>
-		<button onclick="loadModel('../../Module_3/Exercise_2')">Module 3<br>Exercise 2</button>
-		<button onclick="loadModel('../../Module_3/Exercise_3')">Module 3<br>Exercise 3</button>
-		<button onclick="loadModel('../../Module_5/Exercise_1')">Module 5<br>Exercise 1</button>
-		<button onclick="loadModel('../../Module_5/Exercise_2')">Module 5<br>Exercise 2</button>
+		<button onclick="loadModel('M2E1')">Module 2<br>Exercise 1</button>
+		<button onclick="loadModel('M2E2')">Module 2<br>Exercise 2</button>
+		<button onclick="loadModel('M2E3')">Module 2<br>Exercise 3</button>
+		<button onclick="loadModel('M2E4')">Module 2<br>Exercise 4</button>
+		<button onclick="loadModel('M2E5')">Module 2<br>Exercise 5</button>
+		<button onclick="loadModel('M2E6')">Module 2<br>Exercise 6</button>
+		<button onclick="loadModel('M2E7')">Module 2<br>Exercise 7</button>
+		<button onclick="loadModel('M2E8')">Module 2<br>Exercise 8</button>
+		<button onclick="loadModel('M2E9')">Module 2<br>Exercise 9</button>
+		<button onclick="loadModel('M2E10')">Module 2<br>Exercise 10</button>
+		<button onclick="loadModel('M2E11')">Module 2<br>Exercise 11</button>
+		<button onclick="loadModel('M2E12')">Module 2<br>Exercise 12</button>
+		<button onclick="loadModel('M2E13')">Module 2<br>Exercise 13</button>
+		<button onclick="loadModel('M2E14')">Module 2<br>Exercise 14</button>
+		<button onclick="loadModel('M2E15')">Module 2<br>Exercise 15</button>
+		<button onclick="loadModel('M3E1')">Module 3<br>Exercise 1</button>
+		<button onclick="loadModel('M3E2')">Module 3<br>Exercise 2</button>
+		<button onclick="loadModel('M3E3')">Module 3<br>Exercise 3</button>
+		<button onclick="loadModel('M5E1')">Module 5<br>Exercise 1</button>
+		<button onclick="loadModel('M5E2')">Module 5<br>Exercise 2</button>
 	</div>
 	<div style="position:relative;overflow:hidden;width:100vw;height:100vh;background-color:rgb(37,78,118);background-image:url('https://mobatec.azurewebsites.net/images/edu-lic.jpeg');background-size:cover;background-position:right center;" id="site-frame">
 		<iframe id="iframe" src=""></iframe>
 		<script>
 			function loadModel(str){
-				document.getElementById("iframe").src="/lmsLogin/"+lmsHost+"/"+lmsId+"?modelpath="+encodeURIComponent(str); 
+				document.getElementById("iframe").src="/lmsLogin/"+lmsHost+"/"+lmsId+"?exercisename="+encodeURIComponent(str); 
 			}
 		</script>
 	</div>
