@@ -15,7 +15,7 @@ const axios				=	require('axios');
 dotenv.config();
 
 server.set('view engine','ejs');
-var viewArray	=	[__dirname+'/views'];
+var viewArray	=	[__dirname+'/views']; 
 var viewFolder	=	fs.readdirSync('views');
 for(var i=0;i<viewFolder.length;i++){
 	if(viewFolder[i].split(".").length==1){
@@ -403,6 +403,7 @@ function isStrongPassword(password) {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return regex.test(password);
 }
+
 
 server.post('/accountCreation',async (req,res)=>{
 	if(!req.body.json){
