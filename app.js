@@ -890,14 +890,13 @@ server.post('/lmsLogin',async (req,res)=>{
 
 server.post('/powerMeOff',async (req,res)=>{
 	console.log("POWER ME OFF RECEIVED")
-	console.log(req.body);
-	console.log("-------------------------------------------------")
-	console.log("-------------------------------------------------")
-	console.log(req)
-	console.log("*********************************************")
-	console.log("*********************************************")
-	console.log("*********************************************")
 	console.log("*********************************************");
+	const forwardedFor = req.headers["x-forwarded-for"];
+	const ip = forwardedFor
+		? forwardedFor.split(",")[0].trim()
+		: req.socket.remoteAddress;
+
+	console.log("IP:", ip);
 	return res.json({
 		success: true,
 		message: "Power off request received."
