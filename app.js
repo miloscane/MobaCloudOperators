@@ -701,7 +701,7 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 			var activeSimulators = await activeSimulatorsDB.find({hostname:hostname,lmsid:lmsid}).toArray();
 			if(activeSimulators.length==0){
 				var name = "operatorc"+generateId(4).toLowerCase();
-				var response = await createDroplet("s-1vcpu-1gb",workingSnapshot,name);
+				var response = await createDroplet("s-2vcpu-2gb",workingSnapshot,name);
 				if(response==-1){
 					console.log("Error while creating droplet")
 				}
@@ -887,6 +887,22 @@ server.post('/lmsLogin',async (req,res)=>{
 	})
 });
 
+
+server.post('/powerMeOff',async (req,res)=>{
+	console.log("POWER ME OFF RECEIVED")
+	console.log(req.body);
+	console.log("-------------------------------------------------")
+	console.log("-------------------------------------------------")
+	console.log(req)
+	console.log("*********************************************")
+	console.log("*********************************************")
+	console.log("*********************************************")
+	console.log("*********************************************");
+	return res.json({
+		success: true,
+		message: "Power off request received."
+	});
+})
 
 
 
