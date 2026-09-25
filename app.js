@@ -698,6 +698,7 @@ server.get('/lmsLogin/:hostname/:lmsid',async (req,res)=>{
 				})
 			}
 			//res.redirect(users[0].url+"&modelpath="+req.query.modelpath)
+			return res.redirect("https://operatorc.modeller.cloud/lmsExercise/"+encodeURIComponent(hostname)+"/"+encodeURIComponent(lmsid)+"/"+encodeURIComponent(req.query.exercisename))
 			var activeSimulators = await activeSimulatorsDB.find({hostname:hostname,lmsid:lmsid}).toArray();
 			if(activeSimulators.length==0){
 				var name = "operatorc"+generateId(4).toLowerCase();
